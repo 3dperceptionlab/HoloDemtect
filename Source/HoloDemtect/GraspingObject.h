@@ -15,6 +15,8 @@ public:
 	// Sets default values for this actor's properties
 	AGraspingObject();
 
+	AGraspingObject(FString qr_text, FString className = "DefaultMesh");
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -29,13 +31,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		FString qr_text;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-	//	FGuid qr_guid;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-	//	int32 qr_version;
-
 	USceneComponent* SceneRoot;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		UStaticMeshComponent* node;
+
+	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
+		static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FString qr_text);
 };
