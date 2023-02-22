@@ -14,9 +14,6 @@ class HOLODEMTECT_API AGraspingObject : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AGraspingObject();
-
-	AGraspingObject(FString qr_text, FString className = "DefaultMesh");
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -36,5 +33,8 @@ public:
 		UStaticMeshComponent* node;
 
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
-		static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FString qr_text);
+		static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FString qr_text_);
+
+	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
+		void SetActorPosition(FVector center, FVector extent, FRotator rotation);
 };
