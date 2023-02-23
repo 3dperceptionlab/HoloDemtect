@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <string>
+#include "QRItem.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GraspingObject.generated.h"
@@ -25,16 +27,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		FString className;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		FString qr_text;
-
 	USceneComponent* SceneRoot;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		UStaticMeshComponent* node;
 
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
-		static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FString qr_text_);
-
-	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
-		void SetActorPosition(FVector center, FVector extent, FRotator rotation);
+		static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, UQRItem* item);
 };
