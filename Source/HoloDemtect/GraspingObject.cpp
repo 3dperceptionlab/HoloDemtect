@@ -31,7 +31,7 @@ void AGraspingObject::Tick(float DeltaTime)
 
 }
 
-AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, UQRItem* item)
+AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, const UQRItem& item)
 {
 	UWorld* world = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	FActorSpawnParameters SpawnInfo = FActorSpawnParameters();
@@ -43,7 +43,7 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 
 	// TODO: Spawn relative positions from qr item
 	grasping_object->node->SetRelativeRotation(FRotator(-90, 0, 0));
-	grasping_object->node->SetStaticMesh(item->mesh);
+	grasping_object->node->SetStaticMesh(item.mesh);
 	grasping_object->SetActorLocation(center);
 	grasping_object->SetActorRotation(rotation);
 	float scale = (extent.Y + extent.Z) / 50;
