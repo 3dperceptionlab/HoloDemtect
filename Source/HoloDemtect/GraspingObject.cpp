@@ -12,6 +12,8 @@ AGraspingObject::AGraspingObject()
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("ParentNode"));
 
 	this->className = "DefaultMesh";
+	//static ConstructorHelpers::FObjectFinder<UStaticMesh> mesh_object(TEXT("StaticMesh'/Game/YCB/16K/017_orange/017_orange'"));
+	//node->SetStaticMesh(mesh_object.Object);
 	std::string nameStr = std::string(TCHAR_TO_UTF8(*(this->className)));
 	node = CreateDefaultSubobject<UStaticMeshComponent>(nameStr.c_str());
 	node->SetupAttachment(SceneRoot);
@@ -31,7 +33,7 @@ void AGraspingObject::Tick(float DeltaTime)
 
 }
 
-AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, const UQRItem& item)
+AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, UQRItem *item)
 {
 	UWorld* world = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	FActorSpawnParameters SpawnInfo = FActorSpawnParameters();
@@ -43,7 +45,7 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 
 	// TODO: Spawn relative positions from qr item
 	grasping_object->node->SetRelativeRotation(FRotator(-90, 0, 0));
-	grasping_object->node->SetStaticMesh(item.mesh);
+	grasping_object->node->SetStaticMesh(item->mesh);
 	grasping_object->SetActorLocation(center);
 	grasping_object->SetActorRotation(rotation);
 	float scale = (extent.Y + extent.Z) / 50;

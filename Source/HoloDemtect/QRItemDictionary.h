@@ -16,7 +16,7 @@ class HOLODEMTECT_API UQRItemDictionary : public UObject
 {
 	GENERATED_BODY()
 
-	TMap<FString, TArray<UQRItem>> items;
+	TMap<FString, TArray<UQRItem*>> items;
 
 public:
 	UQRItemDictionary();

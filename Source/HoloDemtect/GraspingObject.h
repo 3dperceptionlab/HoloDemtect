@@ -32,5 +32,5 @@ public:
 		UStaticMeshComponent* node;
 
 	//UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
-	static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, const UQRItem& item);
+	static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, UQRItem *item);
 };

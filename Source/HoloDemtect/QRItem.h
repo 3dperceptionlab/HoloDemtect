@@ -15,21 +15,17 @@ class HOLODEMTECT_API UQRItem : public UObject
 	GENERATED_BODY()
 
 public:
-	UQRItem() {};
-	UQRItem(FString meshName_, float_t x, float_t y, float_t z, float_t rx, float_t ry, float_t rz, float_t scale_);
+	UQRItem();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		UStaticMesh* mesh;
+	void SetParams(FString meshName_, FVector loc, FRotator rot, float_t scale_);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		FString meshName;
+	UStaticMesh* mesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		FVector location;
+	FString meshName;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		FRotator rotation;
+	FVector location;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		float scale;
+	FRotator rotation;
+
+	float scale;
 };

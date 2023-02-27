@@ -3,12 +3,16 @@
 
 #include "QRItem.h"
 
-UQRItem::UQRItem(FString meshName_, float_t x, float_t y, float_t z, float_t rx, float_t ry, float_t rz, float_t scale_)
+
+UQRItem::UQRItem()
 {
-	this->meshName = meshName_;
-	this->location = FVector(x, y, z);
-	this->rotation = FRotator(rx, ry, rz);
-	this->scale = scale_;
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> mesh_object((const TCHAR*)*("StaticMesh'" + meshName_ + "'"));
-	this->mesh = mesh_object.Object;
+}
+
+void UQRItem::SetParams(FString meshName_, FVector loc, FRotator rot, float_t scale_)
+{
+	meshName = meshName_;
+	mesh = Cast<UStaticMesh>(StaticLoadObject(UStaticMesh::StaticClass(), nullptr, (const TCHAR*)*("StaticMesh'" + meshName_ + "'")));
+	location = loc;
+	rotation = rot;
+	scale = scale_;
 }

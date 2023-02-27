@@ -5,6 +5,12 @@
 
 UQRItemDictionary::UQRItemDictionary()
 {
+	TArray<UQRItem*> a = TArray<UQRItem*>();
+	UQRItem *i = NewObject<UQRItem>();
+	i->SetParams("/Game/YCB/16K/011_banana.011_banana", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
+
+	a.Add(i);
+	items.Add("bottle", a);
 }
 
 UQRItemDictionary* UQRItemDictionary::CreateInstance(FString filename)
@@ -16,7 +22,7 @@ UQRItemDictionary* UQRItemDictionary::CreateInstance(FString filename)
 
 void UQRItemDictionary::SpawnQRItems(const UObject* WorldContextObject, FString key, FVector center, FRotator rotation, FVector extent)
 {
-	for (const UQRItem& item : *items.Find(key))
+	for (UQRItem* item : *items.Find(key))
 	{
 		AGraspingObject::SpawnGraspingObject(WorldContextObject, center, extent, rotation, item);
 	}
