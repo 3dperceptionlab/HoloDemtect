@@ -43,16 +43,16 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 	grasping_object->node->SetStaticMesh(item->mesh);
 
 	// Global Location/Rotation (extracted from QR)
-	grasping_object->SetActorLocation(center);
-	grasping_object->SetActorRotation(rotation);
+	grasping_object->SetActorLocation(center + item->location);
+	grasping_object->SetActorRotation(rotation + item->rotation);
 
 	// Scale
 	//float scale = (extent.Y + extent.Z) / 50; // Calculated from QR
 	grasping_object->SetActorScale3D(FVector(item->scale, item->scale, item->scale)); // Different for each object
 
-	// Relative Location/Rotation with respect to QR center
-	grasping_object->node->SetRelativeLocation(item->location);
-	grasping_object->node->SetRelativeRotation(item->rotation);
+	// Not working code
+	// grasping_object->node->SetRelativeLocation(item->location);
+	// grasping_object->node->SetRelativeRotation(item->rotation);
 
 	return grasping_object;
 }

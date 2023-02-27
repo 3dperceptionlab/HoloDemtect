@@ -11,12 +11,7 @@ UQRItem::UQRItem()
 void UQRItem::SetParams(FString meshName_, FVector loc, FRotator rot, float_t scale_)
 {
 	meshName = meshName_;
-	
-	UStaticMesh* mesh_ = LoadObject<UStaticMesh>(nullptr, (const TCHAR*)*(meshName_), nullptr, LOAD_None, nullptr);
-	if (mesh_ != nullptr) {
-		mesh = mesh_;
-	}
-
+	mesh = LoadObject<UStaticMesh>(nullptr, (const TCHAR*)*(meshName_), nullptr, LOAD_None, nullptr);
 	location = loc;
 	rotation = rot;
 	scale = scale_;
