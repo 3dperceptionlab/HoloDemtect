@@ -24,6 +24,6 @@ void UQRItemDictionary::SpawnQRItems(const UObject* WorldContextObject, FString 
 {
 	for (UQRItem* item : *items.Find(key))
 	{
-		AGraspingObject::SpawnGraspingObject(WorldContextObject, center, extent, rotation, item);
+		spawned_objects.Add(AGraspingObject::SpawnGraspingObject(WorldContextObject, center, extent, rotation, item));
 	}
 }

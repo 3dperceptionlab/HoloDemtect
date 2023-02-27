@@ -18,7 +18,11 @@ class HOLODEMTECT_API UQRItemDictionary : public UObject
 
 	TMap<FString, TArray<UQRItem*>> items;
 
+
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TArray<AGraspingObject*> spawned_objects;
+
 	UQRItemDictionary();
 
 	UFUNCTION(BlueprintCallable)
