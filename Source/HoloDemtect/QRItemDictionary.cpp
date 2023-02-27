@@ -5,18 +5,51 @@
 
 UQRItemDictionary::UQRItemDictionary()
 {
-	TArray<UQRItem*> a = TArray<UQRItem*>();
-	UQRItem *i = NewObject<UQRItem>();
-	i->SetParams("/Game/YCB/16K/011_banana/011_banana", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
+	//TArray<UQRItem*> a = TArray<UQRItem*>();
+	//UQRItem *i = NewObject<UQRItem>();
+	//i->SetParams("/Game/YCB/16K/011_banana/011_banana", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
 
-	a.Add(i);
-	items.Add("bottle", a);
+	//a.Add(i);
+	//items.Add("bottle", a);
 }
 
 UQRItemDictionary* UQRItemDictionary::CreateInstance(FString filename)
 {
 	UQRItemDictionary* dict = NewObject<UQRItemDictionary>();
-	// TODO: deserialize JSON 
+	
+	// File content to FString
+	FString JsonString;
+	FFileHelper::LoadFileToString(JsonString, *filename);
+	
+	// JSON reader
+	TSharedPtr<FJsonValue> JsonValue;
+	TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(JsonString);
+	
+	if (FJsonSerializer::Deserialize(JsonReader, JsonValue))
+	{
+		// Get keys field: so we know which fields to iterate
+		TArray<FString> keys;
+		JsonValue->AsObject()->TryGetStringArrayField("keys", keys);
+
+		// Iterate over the keys
+		for (FString key : keys)
+		{
+			// Extract UQRItems for each key
+			TArray<UQRItem*> qr_items;
+			auto values = JsonValue->AsObject()->GetArrayField(key);
+			for (auto& value : values)
+			{
+				UQRItem* uqritem = NewObject<UQRItem>();
+				FString meshName = value->AsObject()->GetStringField("mesh");
+				FVector loc(value->AsObject()->GetNumberField("x"), value->AsObject()->GetNumberField("y"), value->AsObject()->GetNumberField("z"));
+				FRotator rot(value->AsObject()->GetNumberField("rx"), value->AsObject()->GetNumberField("ry"), value->AsObject()->GetNumberField("rz"));
+				float scale = value->AsObject()->GetNumberField("scale");
+				uqritem->SetParams(meshName, loc, rot, scale);
+				qr_items.Add(uqritem);
+			}
+			dict->items.Add(key, qr_items);
+		}
+	}
 	return dict;
 }
 
