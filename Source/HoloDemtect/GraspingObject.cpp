@@ -12,8 +12,6 @@ AGraspingObject::AGraspingObject()
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("ParentNode"));
 
 	this->className = "DefaultMesh";
-	//static ConstructorHelpers::FObjectFinder<UStaticMesh> mesh_object(TEXT("StaticMesh'/Game/YCB/16K/017_orange/017_orange'"));
-	//node->SetStaticMesh(mesh_object.Object);
 	std::string nameStr = std::string(TCHAR_TO_UTF8(*(this->className)));
 	node = CreateDefaultSubobject<UStaticMeshComponent>(nameStr.c_str());
 	node->SetupAttachment(SceneRoot);
