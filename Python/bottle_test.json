@@ -1,0 +1,25 @@
+{
+    "bottle": [
+        {
+            "mesh": "/Game/YCB/16K/011_banana/011_banana",
+            "x": 20,
+            "y": 0,
+            "z": 0,
+            "rx": 0,
+            "ry": 0,
+            "rz": 0,
+            "scale": 1
+        },
+        {
+            "mesh": "/Game/YCB/16K/017_orange/017_orange",
+            "x": 20,
+            "y": 20,
+            "z": 0,
+            "rx": 0,
+            "ry": 0,
+            "rz": 0,
+            "scale": 1
+        }
+    ],
+    "keys": ["bottle"]
+}

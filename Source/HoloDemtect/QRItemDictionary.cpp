@@ -16,10 +16,15 @@ UQRItemDictionary::UQRItemDictionary()
 UQRItemDictionary* UQRItemDictionary::CreateInstance(FString filename)
 {
 	UQRItemDictionary* dict = NewObject<UQRItemDictionary>();
+
 	
 	// File content to FString
 	FString JsonString;
-	FFileHelper::LoadFileToString(JsonString, *filename);
+
+	if (!FFileHelper::LoadFileToString(JsonString, *filename)) {
+		UE_LOG(LogTemp, Warning, TEXT("Couldn't read JSON file"));
+	}
+	
 	
 	// JSON reader
 	TSharedPtr<FJsonValue> JsonValue;
@@ -50,6 +55,10 @@ UQRItemDictionary* UQRItemDictionary::CreateInstance(FString filename)
 			dict->items.Add(key, qr_items);
 		}
 	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("Couldn't deserialize JSON"));
+	}
+	
 	return dict;
 }
 
