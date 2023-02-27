@@ -63,6 +63,7 @@ def main():
             try:
                 with open(input("Enter JSON filename: "), 'r') as f:
                     qr_unreal_dict = json.load(f)
+                    qr_unreal_dict.pop("keys")
                 break
             except FileNotFoundError:
                 print("File does not exist. Creating empty dictionary.")
@@ -112,6 +113,7 @@ def main():
         elif menu_option == 6: # Exit and save
             break
         
+    qr_unreal_dict['keys'] = list(qr_unreal_dict.keys())
     with open(input("Enter filename for the new JSON: "), 'w', encoding='utf-8') as f:
         json.dump(qr_unreal_dict, f, ensure_ascii=False, indent=4)
 
