@@ -114,7 +114,7 @@ def main():
             break
         
     qr_unreal_dict['keys'] = list(qr_unreal_dict.keys())
-    with open(input("Enter filename for the new JSON: "), 'w', encoding='utf-8') as f:
+    with open(os.path.join("../Content/JSONDicts/", input("Enter filename for the new JSON (saved in /Game/Content/JSONDicts): ")), 'w', encoding='utf-8') as f:
         json.dump(qr_unreal_dict, f, ensure_ascii=False, indent=4)
 
     print("File saved.")
