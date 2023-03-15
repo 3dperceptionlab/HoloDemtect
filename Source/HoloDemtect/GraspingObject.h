@@ -6,10 +6,11 @@
 #include "QRItem.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "ObjectInterface.h"
 #include "GraspingObject.generated.h"
 
 UCLASS()
-class HOLODEMTECT_API AGraspingObject : public AActor
+class HOLODEMTECT_API AGraspingObject : public AActor, public IObjectInterface
 {
 	GENERATED_BODY()
 	
@@ -33,4 +34,7 @@ public:
 
 	//UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
 	static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, UQRItem *item);
+
+	bool GrabObject_Implementation(USceneComponent*attach_to) override;
+	bool ReleaseObject_Implementation() override;
 };

@@ -15,6 +15,12 @@ AGraspingObject::AGraspingObject()
 	std::string nameStr = std::string(TCHAR_TO_UTF8(*(this->className)));
 	node = CreateDefaultSubobject<UStaticMeshComponent>(nameStr.c_str());
 	node->SetupAttachment(SceneRoot);
+	node->SetSimulatePhysics(true);
+	node->SetLinearDamping(55);
+	node->SetAngularDamping(55);
+	//node set mass to 5 kg
+	node->SetMassOverrideInKg(NAME_None, 5, true);
+
 }
 
 // Called when the game starts or when spawned
@@ -55,5 +61,33 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 	// grasping_object->node->SetRelativeRotation(item->rotation);
 
 	return grasping_object;
+}
+
+bool AGraspingObject::GrabObject_Implementation(USceneComponent* attach_to)
+{
+	//SetSimulatePhysics StaticMeshComponent
+	node->SetSimulatePhysics(false);
+	//AttachComponentToComponent attach_to to root
+	//AttachToComponent(attach_to, FAttachmentTransformRules::KeepWorldTransform);
+	node->AttachToComponent( attach_to, FAttachmentTransformRules::KeepWorldTransform);
+	UE_LOG(LogTemp, Display, TEXT("Grabing object"));
+	
+	return true;
+}
+
+bool AGraspingObject::ReleaseObject_Implementation()
+{
+	node->SetEnableGravity(true);
+	//SetSimulatePhysics StaticMeshComponent
+	node->SetSimulatePhysics(true);
+	//DetachFromComponent
+	node->DetachFromComponent( FDetachmentTransformRules::KeepWorldTransform);
+	DetachFromActor( FDetachmentTransformRules::KeepWorldTransform);
+	
+	DetachRootComponentFromParent( true );
+	UE_LOG(LogTemp, Display, TEXT("Releasing object"));
+
+	
+	return true;
 }
 
