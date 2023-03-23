@@ -12,6 +12,6 @@ void UPairMatchingTask::initialize()
 {
 }
 
-void UPairMatchingTask::eval()
+void UPairMatchingTask::evaluate()
 {
 }

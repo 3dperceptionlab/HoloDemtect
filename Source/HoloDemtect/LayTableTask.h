@@ -19,5 +19,5 @@ public:
 
 	void initialize() override;
 
-	void eval() override;
+	void evaluate() override;
 };
