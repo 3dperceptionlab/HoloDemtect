@@ -19,7 +19,7 @@ AGraspingObject::AGraspingObject()
 	node->SetLinearDamping(55);
 	node->SetAngularDamping(55);
 	//node set mass to 5 kg
-	node->SetMassOverrideInKg(NAME_None, 5, true);
+	//node->SetMassOverrideInKg(NAME_None, 5, true);
 
 }
 
