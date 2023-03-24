@@ -10,14 +10,14 @@
  * 
  */
 UCLASS(BlueprintType)
-class HOLODEMTECT_API UPairMatchingTask : public UTask
+class HOLODEMTECT_API UPairMatchingTask : public UObject // UTask
 {
 	GENERATED_BODY()
 	
 public:
 	UPairMatchingTask();
-
+	/*
 	void initialize() override;
 
-	void evaluate() override;
+	void evaluate() override;*/
 };

@@ -46,6 +46,7 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 		return nullptr;
 
 	AGraspingObject* grasping_object = world->SpawnActor<AGraspingObject>(SpawnInfo);
+	//grasping_object->className = item->meshName;
 	grasping_object->node->SetStaticMesh(item->mesh);
 
 	// Global Location/Rotation (extracted from QR)

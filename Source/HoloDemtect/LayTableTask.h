@@ -10,14 +10,14 @@
  * 
  */
 UCLASS(BlueprintType)
-class HOLODEMTECT_API ULayTableTask : public UTask
+class HOLODEMTECT_API ULayTableTask : public UObject //public UTask
 {
 	GENERATED_BODY()
 	
 public:
 	ULayTableTask();
 
-	void initialize() override;
+	/*void initialize() override;
 
-	void evaluate() override;
+	void evaluate() override;*/
 };

@@ -14,11 +14,13 @@ class HOLODEMTECT_API UShoppingTask : public UTask
 {
 	GENERATED_BODY()
 
+		TQueue<FString> shopping_list;
+
 public:
 	UShoppingTask();
 
-	void initialize() override;
+	void initialize(TArray<AGraspingObject*> SpawnedObjects_, AGraspingObject* evaluation_point_, FTaskInfo taskInfo_) override;
 
-	void evaluate() override;
+	TArray<AGraspingObject*> evaluate() override;
 	
 };

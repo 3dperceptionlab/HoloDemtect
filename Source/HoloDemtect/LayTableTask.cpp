@@ -7,11 +7,11 @@ ULayTableTask::ULayTableTask()
 {
 
 }
-
+/*
 void ULayTableTask::initialize()
 {
 }
 
 void ULayTableTask::evaluate()
 {
-}
+}*/

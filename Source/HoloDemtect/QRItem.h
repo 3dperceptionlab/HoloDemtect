@@ -17,8 +17,6 @@ class HOLODEMTECT_API UQRItem : public UObject
 public:
 	UQRItem();
 
-	void SetParams(FString meshName_, FVector loc, FRotator rot, float_t scale_);
-
 	UStaticMesh* mesh;
 
 	FString meshName;
@@ -28,4 +26,7 @@ public:
 	FRotator rotation;
 
 	float scale;
+	UFUNCTION(BlueprintCallable)
+		void SetParams(FString meshName_, FVector loc, FRotator rot, float scale_);
+
 };

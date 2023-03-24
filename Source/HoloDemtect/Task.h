@@ -25,25 +25,34 @@ public:
 		TArray<FString> items;
 };
 
+/**
+*
+*/
 UCLASS(Abstract, BlueprintType)
 class HOLODEMTECT_API UTask : public UObject
 {
 	GENERATED_BODY()
 
+protected:
+	TArray<AGraspingObject*> SpawnedObjects;
+
+	AGraspingObject* evaluation_point;
+
+	FVector bbox_size;
+
+	FTaskInfo taskInfo;
+
 public:
 	UTask();
-
-	TArray<AGraspingObject*> *SpawnedObjects;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Data")
 		UQRItem* eval_point_info;
 
+	UFUNCTION(BlueprintCallable)
+		virtual void initialize(TArray<AGraspingObject*> SpawnedObjects_, AGraspingObject* evaluation_point, FTaskInfo taskInfo_);
 
 	UFUNCTION(BlueprintCallable)
-		virtual void initialize();
-
-	UFUNCTION(BlueprintCallable)
-		virtual void evaluate();
+		virtual TArray<AGraspingObject*> evaluate();
 
 	UFUNCTION(BlueprintPure)
 		static UClass* GetTaskClassByName(const FString& name);
