@@ -1,0 +1,80 @@
+{
+  "tasks": [
+    {
+      "task_id": "putOjects",
+      "text": "Put the objects on the table",
+      "type": "setup",
+      "items": [
+        { "id": "ball" },
+        { "id": "table" },
+        { "id": "cylinder" }
+      ]
+    },
+    {
+      "task_id": "coupleObjects",
+      "text": "Couple the objects",
+      "type": "couple",
+      "items": [
+        { "id": "spoon" },
+        { "id": "fork" },
+        { "id": "orange" },
+        { "id": "pear" }
+      ]
+    },
+    {
+      "task_id": "shopping",
+      "text": "Do the shopping",
+      "type": "secuential",
+      "items": [
+        { "id": "crackers" },
+        { "id": "snack" },
+        { "id": "orange" },
+        { "id": "can" }
+      ]
+    },
+    {
+      "task_id": "shopping2",
+      "text": "Pick objects",
+      "type": "secuential",
+      "items": [
+        { "id": "crackers" },
+        { "id": "snack" },
+        { "id": "orange" },
+        { "id": "can" }
+      ]
+    },
+    {
+      "task_id": "shopping3",
+      "text": "Some things",
+      "type": "secuential",
+      "items": [
+        { "id": "crackers" },
+        { "id": "snack" },
+        { "id": "orange" },
+        { "id": "can" }
+      ]
+    },
+    {
+      "task_id": "putOjects2",
+      "text": "Which are the objects?",
+      "type": "setup",
+      "items": [
+        { "id": "ball" },
+        { "id": "table" },
+        { "id": "cylinder" }
+      ]
+    },
+    {
+      "task_id": "coupleObjects2",
+      "text": "Pair by pair",
+      "type": "couple",
+      "items": [
+        { "id": "spoon" },
+        { "id": "fork" },
+        { "id": "orange" },
+        { "id": "pear" }
+      ]
+    }
+
+  ]
+}

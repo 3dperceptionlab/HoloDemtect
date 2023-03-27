@@ -46,7 +46,11 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 		return nullptr;
 
 	AGraspingObject* grasping_object = world->SpawnActor<AGraspingObject>(SpawnInfo);
-	grasping_object->node->SetStaticMesh(item->mesh);
+	if(item != nullptr)
+		grasping_object->node->SetStaticMesh(item->mesh);
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("Couldn't load mesh"));
+	}
 
 	// Global Location/Rotation (extracted from QR)
 	grasping_object->SetActorLocation(center + item->location);

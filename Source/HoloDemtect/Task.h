@@ -23,6 +23,8 @@ public:
 		FString className;
 	UPROPERTY(BlueprintReadOnly, Category = "Data")
 		TArray<FString> items;
+
+	void onClickedButton();
 };
 
 UCLASS(Abstract, BlueprintType)
