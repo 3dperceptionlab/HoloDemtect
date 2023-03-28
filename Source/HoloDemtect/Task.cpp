@@ -60,7 +60,6 @@ TMap<FString, FTaskInfo> UTask::LoadTasksFromJSON(const FString& filename)
 	}
 
 	TMap<FString, FTaskInfo> map;
-	return map;
 
 	// JSON reader
 	TSharedPtr<FJsonValue> JsonValue;
@@ -86,6 +85,11 @@ TMap<FString, FTaskInfo> UTask::LoadTasksFromJSON(const FString& filename)
 	}
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Couldn't deserialize JSON"));
+	}
+
+	for (const auto& Pair : map)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *(Pair.Key))
 	}
 
 	return map;

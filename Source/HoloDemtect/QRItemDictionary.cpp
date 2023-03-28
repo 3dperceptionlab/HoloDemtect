@@ -18,7 +18,7 @@ UQRItemDictionary* UQRItemDictionary::CreateInstance(FString filename)
 		UE_LOG(LogTemp, Error, TEXT("Couldn't read JSON file"));
 	}
 	
-	
+
 	// JSON reader
 	TSharedPtr<FJsonValue> JsonValue;
 	TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(JsonString);
