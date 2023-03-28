@@ -5,6 +5,12 @@
 #include "DrawDebugHelpers.h"
 
 
+
+void FTaskInfo::onClickedButton() {
+	
+	UE_LOG(LogTemp, Display, TEXT("Clicked button %s"), *text);
+}
+
 UTask::UTask() 
 {
 
