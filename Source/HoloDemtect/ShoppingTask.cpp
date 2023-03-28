@@ -6,10 +6,10 @@
 UShoppingTask::UShoppingTask()
 {
 	eval_point_info = NewObject<UQRItem>();
-	eval_point_info->SetParams("/Game/YCB/16K/009_gelatin_box/009_gelatin_box", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
-	bbox_size.X = 1;
-	bbox_size.Y = 1;
-	bbox_size.Z = 1;
+	eval_point_info->SetParams("/Game/Basket", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
+	bbox_size.X = 50;
+	bbox_size.Y = 50;
+	bbox_size.Z = 10;
 
 	shopping_list.Enqueue("/Game/YCB/16K/011_banana/011_banana");
 	shopping_list.Enqueue("/Game/YCB/16K/017_orange/017_orange");
@@ -32,10 +32,14 @@ TArray<AGraspingObject*> UShoppingTask::evaluate()
 
 	while (objs.Num() > 0)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Obj: %s"), *objs[0]->className);
+		UE_LOG(LogTemp, Warning, TEXT("Queue: %s"), shopping_list.Peek());
+
 		if (objs[0]->className.Equals(*shopping_list.Peek()))
 		{
 			objs[0]->Destroy();
 			shopping_list.Pop();
+			SpawnedObjects.Remove(objs[0]);
 			// TODO: comprobar que el objeto ya no esta agarrado
 		}
 		else {

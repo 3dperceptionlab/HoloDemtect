@@ -2,6 +2,8 @@
 
 
 #include "Task.h"
+#include "DrawDebugHelpers.h"
+
 
 UTask::UTask() 
 {
@@ -19,12 +21,13 @@ TArray<AGraspingObject*> UTask::evaluate()
 {
 	TArray<AGraspingObject*> objs;
 
-	FBox bbox = FBox::BuildAABB(evaluation_point->GetActorLocation(), bbox_size);
+	//FBox bbox = FBox::BuildAABB(evaluation_point->node->GetComponentLocation(), bbox_size);
+	FBox bbox = evaluation_point->node->CalcBounds(evaluation_point->node->GetComponentTransform()).GetBox();
+	//DrawDebugBox(GetWorld(), bbox.GetCenter(), bbox.GetExtent(), FColor::Yellow, false, -1, 0, 10);
 
 	for (AGraspingObject* obj : SpawnedObjects)
 	{
-		FVector loc = obj->GetActorLocation();
-		if (bbox.IsInside(obj->GetActorLocation()))
+		if (bbox.IsInside(obj->node->GetComponentLocation()))
 		{
 			objs.Add(obj);
 		}
@@ -34,7 +37,7 @@ TArray<AGraspingObject*> UTask::evaluate()
 
 UClass* UTask::GetTaskClassByName(const FString& name)
 {
-	// The following code is stolen from this function, but there is a linker error :(
+	// The following code is stolen from this function, but there is a linker error
 	// return FEditorClassUtils::GetClassFromString(name);
 
 	if (name.IsEmpty() || name == "None")

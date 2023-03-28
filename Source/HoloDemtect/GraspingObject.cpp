@@ -81,7 +81,7 @@ bool AGraspingObject::ReleaseObject_Implementation()
 {
 	node->SetEnableGravity(true);
 	//SetSimulatePhysics StaticMeshComponent
-	node->SetSimulatePhysics(true);
+	//node->SetSimulatePhysics(true);
 	//DetachFromComponent
 	node->DetachFromComponent( FDetachmentTransformRules::KeepWorldTransform);
 	DetachFromActor( FDetachmentTransformRules::KeepWorldTransform);

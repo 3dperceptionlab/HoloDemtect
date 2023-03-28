@@ -24,10 +24,8 @@
     "text": "Do the shopping",
     "type": "ShoppingTask",
     "items": [
-        {"id": "crackers"},
-        {"id": "snack"},
-        {"id": "orange"},
-        {"id": "can"}
+        {"id": "/Game/YCB/16K/017_orange/017_orange"},
+        {"id": "/Game/YCB/16K/011_banana/011_banana"}
     ]
     }
 
