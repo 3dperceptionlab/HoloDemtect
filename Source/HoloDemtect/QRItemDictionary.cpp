@@ -10,13 +10,12 @@ UQRItemDictionary::UQRItemDictionary()
 UQRItemDictionary* UQRItemDictionary::CreateInstance(FString filename)
 {
 	UQRItemDictionary* dict = NewObject<UQRItemDictionary>();
-
 	
 	// File content to FString
 	FString JsonString;
 
 	if (!FFileHelper::LoadFileToString(JsonString, *filename)) {
-		UE_LOG(LogTemp, Warning, TEXT("Couldn't read JSON file"));
+		UE_LOG(LogTemp, Error, TEXT("Couldn't read JSON file"));
 	}
 	
 	
@@ -58,6 +57,11 @@ UQRItemDictionary* UQRItemDictionary::CreateInstance(FString filename)
 
 void UQRItemDictionary::SpawnQRItems(const UObject* WorldContextObject, FString key, FVector center, FRotator rotation, FVector extent)
 {
+	if (!items.Contains(key)) {
+		UE_LOG(LogTemp, Error, TEXT("Key is not in QR items dict"));
+		return;
+	}
+
 	for (UQRItem* item : *items.Find(key))
 	{
 		spawned_objects.Add(AGraspingObject::SpawnGraspingObject(WorldContextObject, center, extent, rotation, item));

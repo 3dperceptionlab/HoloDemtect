@@ -3,23 +3,35 @@
         {
             "mesh": "/Game/YCB/16K/011_banana/011_banana",
             "x": 0,
-            "y": 50,
+            "y": 0,
             "z": 0,
             "rx": 0,
             "ry": 0,
             "rz": 0,
-            "scale": 0.5
+            "scale": 0.1
         },
         {
             "mesh": "/Game/YCB/16K/017_orange/017_orange",
-            "x": 20,
-            "y": 50,
-            "z": 50,
+            "x": 0,
+            "y": 0,
+            "z": 10,
             "rx": 0,
             "ry": 0,
             "rz": 0,
-            "scale": 0.5
+            "scale": 0.1
         }
     ],
-    "keys": ["bottle"]
+    "cracker": [
+        {
+            "mesh": "/Game/YCB/16K/011_banana/011_banana",
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "rx": 0,
+            "ry": 0,
+            "rz": 0,
+            "scale": 0.1
+        }
+    ],
+    "keys": ["bottle", "cracker"]
 }

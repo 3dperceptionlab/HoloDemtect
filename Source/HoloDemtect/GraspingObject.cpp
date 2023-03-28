@@ -15,9 +15,10 @@ AGraspingObject::AGraspingObject()
 	std::string nameStr = std::string(TCHAR_TO_UTF8(*(this->className)));
 	node = CreateDefaultSubobject<UStaticMeshComponent>(nameStr.c_str());
 	node->SetupAttachment(SceneRoot);
-	node->SetSimulatePhysics(true);
-	node->SetLinearDamping(55);
-	node->SetAngularDamping(55);
+	//SetRootComponent(SceneRoot);
+	//node->SetSimulatePhysics(true);
+	//node->SetLinearDamping(55);
+	//node->SetAngularDamping(55);
 	//node set mass to 5 kg
 	//node->SetMassOverrideInKg(NAME_None, 5, true);
 
@@ -46,7 +47,7 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 		return nullptr;
 
 	AGraspingObject* grasping_object = world->SpawnActor<AGraspingObject>(SpawnInfo);
-	//grasping_object->className = item->meshName;
+	grasping_object->className = item->meshName;
 	grasping_object->node->SetStaticMesh(item->mesh);
 
 	// Global Location/Rotation (extracted from QR)
