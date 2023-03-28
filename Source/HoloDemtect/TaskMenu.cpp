@@ -1,3 +1,4 @@
+#include "Styling/SlateColor.h"
 #include "TaskMenu.h"
 
 void UTaskMenu::NativeConstruct()
@@ -12,7 +13,7 @@ void UTaskMenu::NativeConstruct()
 
 	box->ClearChildren();
 
-	//for taskInfo TMap iterate and create buttons with text
+
 
 	for (auto& taskInfo : taskInfos){
 
@@ -23,6 +24,7 @@ void UTaskMenu::NativeConstruct()
 		Task->BackgroundColor = buttonTemplate->BackgroundColor;
 		Task->SetStyle(buttonTemplate->WidgetStyle);
 		Task->OnPressed.AddDynamic(this, &UTaskMenu::OnButtonClicked);
+
 
 		tasks.Add(Task);
 		
@@ -42,7 +44,7 @@ void UTaskMenu::NativeConstruct()
 		
 		UTextBlock* TextBlock = WidgetTree->ConstructWidget<UTextBlock>(UTextBlock::StaticClass());
 		//set text color to black
-		//TextBlock->SetColorAndOpacity(FSlateColor(FLinearColor(0,0,0,1)));
+		TextBlock->SetColorAndOpacity(FSlateColor(FLinearColor(0,0,0,1)));
 		TextBlock->SetText(FText::FromString(taskInfo.Value.text ));
 		tasks[tasks.Num()-1]->AddChild(TextBlock);
 
@@ -51,6 +53,31 @@ void UTaskMenu::NativeConstruct()
 	}
 
 
+	/*// Recorrer los slots y establecer el tamaño de los botones
+	for (UCanvasPanelSlot* Slot : Slots)
+	{
+		// Verificar si el widget del slot es un botón
+		if (UButton* Button = Cast<UButton>(Slot->Content))
+		{
+			// Obtener el objeto FAnchorData del slot
+			FAnchorData AnchorData = Slot->GetLayout();
+
+			// Establecer el tamaño en X y Y del botón a 100 unidades
+			AnchorData.Size = FSlateLayoutSize(ESlateSizeRule::Fixed, 100.f, 100.f);
+
+			// Actualizar el objeto FAnchorData del slot
+			Slot->SetLayout(AnchorData);
+		}
+	}*/
+	
+	TArray<UWidget*> ScrollBoxWidgets = box->GetAllChildren();
+	// Iterar sobre los widgets y establecer el Padding en el slot correspondiente
+	for (UWidget* Widget : ScrollBoxWidgets){
+		if (UScrollBoxSlot* ScrollBoxSlot = Cast<UScrollBoxSlot>(Widget->Slot)){
+			// Establecer el Padding en el slot
+			ScrollBoxSlot->SetPadding(FMargin(50.f, ScrollBoxSlot->Padding.Top, 50.f, ScrollBoxSlot->Padding.Bottom));
+		}
+	}
 
 }
 

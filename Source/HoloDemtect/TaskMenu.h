@@ -1,13 +1,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Math/Color.h"
-#include "Styling/SlateColor.h"
-#include "Styling/SlateTypes.h"
+
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetTree.h"
 #include "Task.h"
 #include "Components/VerticalBox.h"
+#include "Components/CanvasPanelSlot.h"
+#include "Components/ScrollBoxSlot.h"
 #include "Components/TextBlock.h"
 #include "Components/CanvasPanel.h"
 #include "Components/Button.h"
