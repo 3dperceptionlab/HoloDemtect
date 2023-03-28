@@ -33,12 +33,24 @@ TArray<AGraspingObject*> UTask::evaluate()
 
 	for (AGraspingObject* obj : SpawnedObjects)
 	{
-		if (bbox.IsInside(obj->node->GetComponentLocation()))
+		if (bbox.IsInside(obj->node->GetComponentLocation()) && !obj->grabbed)
 		{
 			objs.Add(obj);
 		}
 	}
 	return objs;
+}
+
+bool UTask::AreObjectsValid(TArray<AGraspingObject*> objs)
+{
+	// Do nothing: implement in sub-tasks
+	return false;
+}
+
+bool UTask::IsTaskFinished()
+{
+	// Do nothing: implement in sub-tasks
+	return false;
 }
 
 UClass* UTask::GetTaskClassByName(const FString& name)

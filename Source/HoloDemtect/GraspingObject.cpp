@@ -11,6 +11,7 @@ AGraspingObject::AGraspingObject()
 
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("ParentNode"));
 
+	grabbed = false;
 	this->className = "DefaultMesh";
 	std::string nameStr = std::string(TCHAR_TO_UTF8(*(this->className)));
 	node = CreateDefaultSubobject<UStaticMeshComponent>(nameStr.c_str());
@@ -67,6 +68,7 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 
 bool AGraspingObject::GrabObject_Implementation(USceneComponent* attach_to)
 {
+	grabbed = true;
 	//SetSimulatePhysics StaticMeshComponent
 	node->SetSimulatePhysics(false);
 	//AttachComponentToComponent attach_to to root
@@ -79,6 +81,7 @@ bool AGraspingObject::GrabObject_Implementation(USceneComponent* attach_to)
 
 bool AGraspingObject::ReleaseObject_Implementation()
 {
+	grabbed = false;
 	node->SetEnableGravity(true);
 	//SetSimulatePhysics StaticMeshComponent
 	//node->SetSimulatePhysics(true);

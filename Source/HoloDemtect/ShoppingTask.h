@@ -14,7 +14,7 @@ class HOLODEMTECT_API UShoppingTask : public UTask
 {
 	GENERATED_BODY()
 
-		TQueue<FString> shopping_list;
+	TDoubleLinkedList<FString> shopping_list;
 
 public:
 	UShoppingTask();
@@ -22,5 +22,9 @@ public:
 	void initialize(TArray<AGraspingObject*> SpawnedObjects_, AGraspingObject* evaluation_point_, FTaskInfo taskInfo_) override;
 
 	TArray<AGraspingObject*> evaluate() override;
+
+	bool IsTaskFinished() override;
+
+	bool AreObjectsValid(TArray<AGraspingObject*> objs) override;
 	
 };

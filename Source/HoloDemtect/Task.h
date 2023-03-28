@@ -57,6 +57,12 @@ public:
 		virtual TArray<AGraspingObject*> evaluate();
 
 	UFUNCTION(BlueprintPure)
+		virtual bool AreObjectsValid(TArray<AGraspingObject*> objs);
+
+	UFUNCTION(BlueprintPure)
+		virtual bool IsTaskFinished();
+
+	UFUNCTION(BlueprintPure)
 		static UClass* GetTaskClassByName(const FString& name);
 
 	UFUNCTION(BlueprintCallable)

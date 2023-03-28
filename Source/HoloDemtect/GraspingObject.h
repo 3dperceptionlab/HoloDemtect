@@ -25,6 +25,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Data")
+		bool grabbed;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		FString className;
 
