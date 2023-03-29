@@ -13,10 +13,8 @@
     "text": "Couple the objects",
     "type": "PairMatchingTask",
     "items": [
-        {"id": "spoon"}, 
-        {"id": "fork"},
-        {"id": "orange"},
-        {"id": "pear"}
+        {"id": "/Game/YCB/16K/017_orange/017_orange"}, 
+        {"id": "/Game/YCB/16K/011_banana/011_banana"}
     ]
     },
     {
