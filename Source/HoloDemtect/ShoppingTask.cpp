@@ -57,8 +57,8 @@ bool UShoppingTask::AreObjectsValid(TArray<AGraspingObject*> objs)
 		objs_classes.AddTail(obj->className);
 	}
 
-	for (FString s : shopping_list)
-	{
+	for (FString s : shopping_list){
+		UE_LOG(LogTemp, Warning, TEXT("Shopping list: %s"), *s);
 		auto* node = objs_classes.FindNode(s);
 		if (node == nullptr)
 			return false;
@@ -68,4 +68,28 @@ bool UShoppingTask::AreObjectsValid(TArray<AGraspingObject*> objs)
 
 	SpawnedObjects = objs;
 	return true;
+}
+
+TArray<FString> UShoppingTask::GetTaskItems(TArray<AGraspingObject*> objs)
+{
+	TArray<FString> items;
+
+	TDoubleLinkedList<FString> objs_classes;
+	if(objs.Num()>0)
+		for (auto* obj : objs) {
+			objs_classes.AddTail(obj->className);
+		}
+
+	for (FString s : shopping_list){
+		auto* node = objs_classes.FindNode(s);
+		if (node == nullptr) {
+			FString itemString;
+			s.Split(TEXT("_"), nullptr, &itemString, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
+
+			items.Add(itemString);
+		}
+
+	}
+
+	return items;
 }

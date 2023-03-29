@@ -46,6 +46,13 @@ bool UTask::AreObjectsValid(TArray<AGraspingObject*> objs)
 	return false;
 }
 
+TArray<FString> UTask::GetTaskItems(TArray<AGraspingObject*> objs){
+
+	// Returning empty array: implement in sub-tasks
+
+	return TArray<FString>();
+}
+
 bool UTask::IsTaskFinished()
 {
 	// Do nothing: implement in sub-tasks

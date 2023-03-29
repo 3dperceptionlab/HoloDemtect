@@ -41,6 +41,14 @@ void AGraspingObject::Tick(float DeltaTime)
 
 AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, UQRItem *item)
 {
+	//check item->location variables are not -nan
+	if (item->location.ContainsNaN()){
+
+		UE_LOG(LogTemp, Warning, TEXT("Location is NaN"));
+		return nullptr;
+	}
+	
+
 	UWorld* world = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	FActorSpawnParameters SpawnInfo = FActorSpawnParameters();
 

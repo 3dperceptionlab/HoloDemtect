@@ -26,5 +26,7 @@ public:
 	bool IsTaskFinished() override;
 
 	bool AreObjectsValid(TArray<AGraspingObject*> objs) override;
+
+	TArray<FString> GetTaskItems(TArray<AGraspingObject*> objs) override;
 	
 };

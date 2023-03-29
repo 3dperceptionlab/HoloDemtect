@@ -60,6 +60,9 @@ public:
 		virtual bool AreObjectsValid(TArray<AGraspingObject*> objs);
 
 	UFUNCTION(BlueprintPure)
+		virtual TArray<FString> GetTaskItems(TArray<AGraspingObject*> objs);
+
+	UFUNCTION(BlueprintPure)
 		virtual bool IsTaskFinished();
 
 	UFUNCTION(BlueprintPure)
