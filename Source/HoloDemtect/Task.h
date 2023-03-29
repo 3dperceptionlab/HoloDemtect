@@ -38,8 +38,6 @@ class HOLODEMTECT_API UTask : public UObject
 protected:
 	TArray<AGraspingObject*> SpawnedObjects;
 
-	AGraspingObject* evaluation_point;
-
 	FVector bbox_size;
 
 	FTaskInfo taskInfo;
@@ -50,8 +48,11 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Data")
 		UQRItem* eval_point_info;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Data")
+		AGraspingObject* evaluation_point;
+
 	UFUNCTION(BlueprintCallable)
-		virtual void initialize(AGraspingObject* evaluation_point, FTaskInfo taskInfo_);
+		virtual void initialize(AGraspingObject* evaluation_point_p, FTaskInfo taskInfo_);
 
 	UFUNCTION(BlueprintCallable)
 		virtual TArray<AGraspingObject*> evaluate();

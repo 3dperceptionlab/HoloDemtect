@@ -28,6 +28,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Data")
 		bool grabbed;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Data")
+		bool movable;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		FString className;
 
