@@ -19,7 +19,7 @@ class HOLODEMTECT_API UShoppingTask : public UTask
 public:
 	UShoppingTask();
 
-	void initialize(TArray<AGraspingObject*> SpawnedObjects_, AGraspingObject* evaluation_point_, FTaskInfo taskInfo_) override;
+	void initialize(AGraspingObject* evaluation_point_, FTaskInfo taskInfo_) override;
 
 	TArray<AGraspingObject*> evaluate() override;
 

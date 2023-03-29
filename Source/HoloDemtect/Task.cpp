@@ -16,9 +16,8 @@ UTask::UTask()
 
 }
 
-void UTask::initialize(TArray<AGraspingObject*> SpawnedObjects_, AGraspingObject* evaluation_point_, FTaskInfo taskInfo_)
+void UTask::initialize(AGraspingObject* evaluation_point_, FTaskInfo taskInfo_)
 {
-	this->SpawnedObjects = SpawnedObjects_;
 	this->evaluation_point = evaluation_point_;
 	this->taskInfo = taskInfo_;
 }
@@ -106,11 +105,6 @@ TMap<FString, FTaskInfo> UTask::LoadTasksFromJSON(const FString& filename)
 	}
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Couldn't deserialize JSON"));
-	}
-
-	for (const auto& Pair : map)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *(Pair.Key))
 	}
 
 	return map;

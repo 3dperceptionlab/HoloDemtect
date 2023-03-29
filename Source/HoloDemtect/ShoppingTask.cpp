@@ -12,9 +12,9 @@ UShoppingTask::UShoppingTask()
 	bbox_size.Z = 10;
 }
 
-void UShoppingTask::initialize(TArray<AGraspingObject*> SpawnedObjects_, AGraspingObject* evaluation_point_, FTaskInfo taskInfo_)
+void UShoppingTask::initialize(AGraspingObject* evaluation_point_, FTaskInfo taskInfo_)
 {
-	UTask::initialize(SpawnedObjects_, evaluation_point_, taskInfo_);
+	UTask::initialize(evaluation_point_, taskInfo_);
 
 	for (FString s : taskInfo.items)
 	{
@@ -30,8 +30,6 @@ TArray<AGraspingObject*> UShoppingTask::evaluate()
 	while (objs.Num() > 0)
 	{
 		auto head = shopping_list.GetHead();
-		UE_LOG(LogTemp, Warning, TEXT("Obj: %s"), *objs[0]->className);
-		UE_LOG(LogTemp, Warning, TEXT("Queue: %s"), *head->GetValue());
 
 		if (objs[0]->className.Equals(head->GetValue()))
 		{
@@ -49,6 +47,10 @@ TArray<AGraspingObject*> UShoppingTask::evaluate()
 
 bool UShoppingTask::IsTaskFinished()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Finished?: %d"), shopping_list.Num());
+	UE_LOG(LogTemp, Log, TEXT("My boolean value: %s"), (bool)shopping_list.Num() ? TEXT("true") : TEXT("false"));
+
+
 	return (bool)shopping_list.Num();
 }
 
@@ -61,9 +63,13 @@ bool UShoppingTask::AreObjectsValid(TArray<AGraspingObject*> objs)
 
 	for (FString s : shopping_list)
 	{
-		if (!objs_classes.Contains(s))
+		auto* node = objs_classes.FindNode(s);
+		if (node == nullptr)
 			return false;
-		objs_classes.RemoveNode(s);
+
+		objs_classes.RemoveNode(node);
 	}
+
+	SpawnedObjects = objs;
 	return true;
 }

@@ -51,7 +51,7 @@ public:
 		UQRItem* eval_point_info;
 
 	UFUNCTION(BlueprintCallable)
-		virtual void initialize(TArray<AGraspingObject*> SpawnedObjects_, AGraspingObject* evaluation_point, FTaskInfo taskInfo_);
+		virtual void initialize(AGraspingObject* evaluation_point, FTaskInfo taskInfo_);
 
 	UFUNCTION(BlueprintCallable)
 		virtual TArray<AGraspingObject*> evaluate();
