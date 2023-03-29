@@ -47,11 +47,7 @@ TArray<AGraspingObject*> UShoppingTask::evaluate()
 
 bool UShoppingTask::IsTaskFinished()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Finished?: %d"), shopping_list.Num());
-	UE_LOG(LogTemp, Log, TEXT("My boolean value: %s"), (bool)shopping_list.Num() ? TEXT("true") : TEXT("false"));
-
-
-	return (bool)shopping_list.Num();
+	return !(bool)shopping_list.Num();
 }
 
 bool UShoppingTask::AreObjectsValid(TArray<AGraspingObject*> objs)
