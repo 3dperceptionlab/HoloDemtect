@@ -12,6 +12,7 @@ AGraspingObject::AGraspingObject()
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("ParentNode"));
 
 	grabbed = false;
+	movable = true;
 	this->className = "DefaultMesh";
 	std::string nameStr = std::string(TCHAR_TO_UTF8(*(this->className)));
 	node = CreateDefaultSubobject<UStaticMeshComponent>(nameStr.c_str());
@@ -76,24 +77,28 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 
 bool AGraspingObject::GrabObject_Implementation(USceneComponent* attach_to)
 {
+	if (!movable)
+		return false;
+
 	grabbed = true;
 	//SetSimulatePhysics StaticMeshComponent
 	node->SetSimulatePhysics(false);
-	//AttachComponentToComponent attach_to to root
-	//AttachToComponent(attach_to, FAttachmentTransformRules::KeepWorldTransform);
-	node->AttachToComponent( attach_to, FAttachmentTransformRules::KeepWorldTransform);
+	node->AttachToComponent(attach_to, FAttachmentTransformRules::KeepWorldTransform);
 	UE_LOG(LogTemp, Display, TEXT("Grabing object"));
-	
+
 	return true;
+	
 }
 
 bool AGraspingObject::ReleaseObject_Implementation()
 {
+	if (!movable)
+		return false;
+
 	grabbed = false;
 	node->SetEnableGravity(true);
 	//SetSimulatePhysics StaticMeshComponent
 	//node->SetSimulatePhysics(true);
-	//DetachFromComponent
 	node->DetachFromComponent( FDetachmentTransformRules::KeepWorldTransform);
 	DetachFromActor( FDetachmentTransformRules::KeepWorldTransform);
 	

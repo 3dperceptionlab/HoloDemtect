@@ -75,10 +75,10 @@ TArray<FString> UShoppingTask::GetTaskItems(TArray<AGraspingObject*> objs)
 	TArray<FString> items;
 
 	TDoubleLinkedList<FString> objs_classes;
-	if(objs.Num()>0)
-		for (auto* obj : objs) {
-			objs_classes.AddTail(obj->className);
-		}
+
+	for (auto* obj : objs) {
+		objs_classes.AddTail(obj->className);
+	}
 
 	for (FString s : shopping_list){
 		auto* node = objs_classes.FindNode(s);
