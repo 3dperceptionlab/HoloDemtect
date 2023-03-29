@@ -10,14 +10,22 @@
  * 
  */
 UCLASS(BlueprintType)
-class HOLODEMTECT_API UPairMatchingTask : public UObject // UTask
+class HOLODEMTECT_API UPairMatchingTask : public UTask
 {
 	GENERATED_BODY()
+
+	TMap<FString, FString> pairings;
 	
 public:
 	UPairMatchingTask();
-	/*
-	void initialize() override;
 
-	void evaluate() override;*/
+	void initialize(AGraspingObject* evaluation_point_, FTaskInfo taskInfo_) override;
+
+	TArray<AGraspingObject*> evaluate() override;
+
+	bool AreObjectsValid(TArray<AGraspingObject*> objs) override;
+
+	TArray<FString> GetTaskItems(TArray<AGraspingObject*> objs) override;
+
+	bool IsTaskFinished() override;
 };
