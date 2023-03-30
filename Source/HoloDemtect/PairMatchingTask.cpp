@@ -79,7 +79,7 @@ TArray<FString> UPairMatchingTask::GetTaskItems(TArray<AGraspingObject*> objs)
 		objs_classes.AddTail(obj->className);
 	}
 
-	TSet<FString> keys;
+	TArray<FString> keys;
 	pairings.GetKeys(keys);
 
 	for (FString s : keys) {
