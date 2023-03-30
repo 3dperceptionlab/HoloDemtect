@@ -7,9 +7,6 @@ UPairMatchingTask::UPairMatchingTask()
 {
 	eval_point_info = NewObject<UQRItem>();
 	eval_point_info->SetParams("/Game/EvalPointAssets/Basket", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
-	bbox_size.X = 50;
-	bbox_size.Y = 50;
-	bbox_size.Z = 10;
 }
 
 void UPairMatchingTask::initialize(AGraspingObject* evaluation_point_, FTaskInfo taskInfo_)
@@ -36,7 +33,10 @@ TArray<AGraspingObject*> UPairMatchingTask::evaluate()
 			pairings.FindAndRemoveChecked(objs[0]->className);
 
 			objs[1]->Destroy();
+			objs.RemoveAt(1);
 			objs[0]->Destroy();
+			objs.RemoveAt(0);
+
 
 			objs.Empty();
 		}
@@ -55,7 +55,7 @@ bool UPairMatchingTask::AreObjectsValid(TArray<AGraspingObject*> objs)
 		objs_classes.AddTail(obj->className);
 	}
 
-	TSet<FString> keys;
+	TArray<FString> keys;
 	pairings.GetKeys(keys);
 
 	for (FString s : keys) {

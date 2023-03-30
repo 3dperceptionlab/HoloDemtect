@@ -7,9 +7,6 @@ UShoppingTask::UShoppingTask()
 {
 	eval_point_info = NewObject<UQRItem>();
 	eval_point_info->SetParams("/Game/EvalPointAssets/Basket", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
-	bbox_size.X = 50;
-	bbox_size.Y = 50;
-	bbox_size.Z = 10;
 }
 
 void UShoppingTask::initialize(AGraspingObject* evaluation_point_, FTaskInfo taskInfo_)

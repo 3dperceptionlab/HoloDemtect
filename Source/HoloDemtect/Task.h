@@ -38,8 +38,6 @@ class HOLODEMTECT_API UTask : public UObject
 protected:
 	TArray<AGraspingObject*> SpawnedObjects;
 
-	FVector bbox_size;
-
 	FTaskInfo taskInfo;
 
 public:
