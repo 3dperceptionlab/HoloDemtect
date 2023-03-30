@@ -1,37 +1,69 @@
 {
-    "bottle": [
-        {
-            "mesh": "/Game/YCB/16K/011_banana/011_banana",
-            "x": 0,
-            "y": 0,
-            "z": 0,
-            "rx": 0,
-            "ry": 0,
-            "rz": 0,
-            "scale": 0.1
-        },
-        {
-            "mesh": "/Game/YCB/16K/017_orange/017_orange",
-            "x": 0,
-            "y": 0,
-            "z": 10,
-            "rx": 0,
-            "ry": 0,
-            "rz": 0,
-            "scale": 0.1
-        }
-    ],
-    "cracker": [
-        {
-            "mesh": "/Game/YCB/16K/011_banana/011_banana",
-            "x": 0,
-            "y": 0,
-            "z": 0,
-            "rx": 0,
-            "ry": 0,
-            "rz": 0,
-            "scale": 0.1
-        }
-    ],
-    "keys": ["bottle", "cracker"]
+  "bottle": [
+    {
+      "mesh": "/Game/YCB/16K/011_banana/011_banana",
+      "x": 0,
+      "y": 0,
+      "z": 8,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/017_orange/017_orange",
+      "x": 15,
+      "y": 0,
+      "z": 10,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.14
+    }
+  ],
+  "cracker": [
+    {
+      "mesh": "/Game/YCB/16K/011_banana/011_banana",
+      "x": 0,
+      "y": 0,
+      "z": 8,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.12
+    }
+  ],
+  "lego": [
+    {
+      "mesh": "/Game/YCB/16K/040_large_marker/040_large_marker",
+      "x": 0,
+      "y": 0,
+      "z": 2,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/055_baseball/055_baseball",
+      "x": 5,
+      "y": 15,
+      "z": 4,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/073-b_lego_duplo/073-b_lego_duplo",
+      "x": 2,
+      "y": -5,
+      "z": 4,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "keys": [ "bottle", "cracker", "lego" ]
 }
