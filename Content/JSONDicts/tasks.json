@@ -13,8 +13,12 @@
     "text": "Couple the objects",
     "type": "PairMatchingTask",
     "items": [
-        {"id": "/Game/YCB/16K/017_orange/017_orange"}, 
-        {"id": "/Game/YCB/16K/011_banana/011_banana"}
+        {"id": "/Game/YCB/16K/017_orange/017_orange"},
+      { "id": "/Game/YCB/16K/011_banana/011_banana" },
+      { "id": "/Game/YCB/16K/040_large_marker/040_large_marker" },
+      { "id": "/Game/YCB/16K/073-b_lego_duplo/073-b_lego_duplo" }
+
+
     ]
     },
     {
