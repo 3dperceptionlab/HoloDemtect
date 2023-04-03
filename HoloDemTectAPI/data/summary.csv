@@ -1,1 +1,14 @@
 task_id;task_type;time_total;time_holding;num_errors;age;gender;visual_evaluation
+1;PairMatchingTask;20.481403;;;;;
+2;PairMatchingTask;43.023426;;;;;
+3;PairMatchingTask;23.587217;;;;;
+4;PairMatchingTask;42.778;;;;;
+5;PairMatchingTask;24.833;;;;;
+6;PairMatchingTask;20.083;;;;;
+7;PairMatchingTask;72.072998;;;;;
+8;PairMatchingTask;71.832001;;;;;
+9;PairMatchingTask;87.050003;;;;;
+10;PairMatchingTask;19.469;;;;;
+11;PairMatchingTask;38.679001;;;;;
+12;LayTableTask;35.785;;;;;
+13;ShoppingTask;15.268;;;;;

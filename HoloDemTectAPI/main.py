@@ -32,8 +32,7 @@ def time_series():
     if id == -1:
         id = id_counter
         id_counter += 1
-    elif id > id_counter:
-        id_counter = id + 1
+        write_to_file(f'time_series/{id}', 'Time;RightHandObject;LeftHandObject;RightHandPos;RightHandRot;LeftHandPos;LeftHandRot;HeadPos;HeadRot;ObjectPut;EyeTrackerPos')
 
     write_to_file(f'time_series/{id}', request.form['row'])
 
