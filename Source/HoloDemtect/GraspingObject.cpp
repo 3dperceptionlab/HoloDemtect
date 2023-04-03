@@ -105,7 +105,7 @@ bool AGraspingObject::ReleaseObject_Implementation()
 	DetachRootComponentFromParent( true );
 	UE_LOG(LogTemp, Display, TEXT("Releasing object"));
 
-	
+
 	return true;
 }
 

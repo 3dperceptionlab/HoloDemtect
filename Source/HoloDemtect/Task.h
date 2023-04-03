@@ -9,7 +9,7 @@
 
 /**
  * 
- */
+ **/
 
 USTRUCT(BlueprintType)
 struct FTaskInfo
