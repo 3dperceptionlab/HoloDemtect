@@ -6,7 +6,7 @@
 UPairMatchingTask::UPairMatchingTask()
 {
 	eval_point_info = NewObject<UQRItem>();
-	eval_point_info->SetParams("/Game/EvalPointAssets/Basket", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
+	eval_point_info->SetParams("/Game/EvalPointAssets/PairTable", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
 }
 
 void UPairMatchingTask::initialize(AGraspingObject* evaluation_point_, FTaskInfo taskInfo_)
@@ -27,16 +27,17 @@ TArray<AGraspingObject*> UPairMatchingTask::evaluate()
 
 	if (objs.Num() == 2)
 	{
-		if (objs[0]->className.Equals(pairings[objs[1]->className]))
+		if (pairings.Contains(objs[1]->className) && objs[0]->className.Equals(pairings[objs[1]->className]))
 		{
 			pairings.FindAndRemoveChecked(pairings[objs[0]->className]);
 			pairings.FindAndRemoveChecked(objs[0]->className);
 
 			objs[1]->Destroy();
+			SpawnedObjects.Remove(objs[1]);
 			objs.RemoveAt(1);
 			objs[0]->Destroy();
+			SpawnedObjects.Remove(objs[0]);
 			objs.RemoveAt(0);
-
 
 			objs.Empty();
 		}

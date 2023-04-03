@@ -3,10 +3,10 @@
     "task_id": "putOjects",
     "text": "Put the objects on the table",
     "type": "LayTableTask",
-    "items": [
-        {"id": "ball"},
-        {"id": "table"},
-        {"id": "cylinder"}]
+      "items": [
+        { "id": "/Game/YCB/16K/017_orange/017_orange" },
+        { "id": "/Game/YCB/16K/011_banana/011_banana" }
+      ]
     },
     {
     "task_id": "coupleObjects",

@@ -33,8 +33,7 @@ TArray<AGraspingObject*> UShoppingTask::evaluate()
 			objs[0]->Destroy();
 			shopping_list.RemoveNode(head);
 			SpawnedObjects.Remove(objs[0]);
-		}
-		else {
+		}else {
 			errors.Add(objs[0]);
 		}
 		objs.RemoveAt(0);

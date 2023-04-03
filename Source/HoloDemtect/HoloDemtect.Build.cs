@@ -7,7 +7,7 @@ public class HoloDemtect : ModuleRules{
 	public HoloDemtect(ReadOnlyTargetRules Target) : base(Target){
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Json", "UMG", "SlateCore" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Json", "UMG", "SlateCore", "Http" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
