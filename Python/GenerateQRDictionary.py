@@ -17,7 +17,8 @@ def menu():
         print("\t 3. Add QR.")
         print("\t 4. Edit QR dictionary.")
         print("\t 5. Generate QR image.")
-        print("\t 6. Save JSON and exit.")
+        print("\t 6. Generate all QR images.")
+        print("\t 7. Save JSON and exit.")
         option = input("Selected option: ")
         if not option.isnumeric():
             print("Input error. Option must be a number.")
@@ -119,9 +120,20 @@ def main():
                 # save the image
                 img.save( qr_id + ".png")
 
+        elif menu_option == 6: # Generate all QRs
+            for qr_id in qr_unreal_dict:
+                img = qrcode.make(qr_id)
+
+                # add text to the bottom of the image
+                draw = ImageDraw.Draw(img)
+                font = ImageFont.truetype("arial.ttf", 16)
+                draw.text((img.width*7, img.height-20), qr_id, font=font, fill="black", anchor="mm")
+
+                # save the image
+                img.save( qr_id + ".png")
 
                 
-        elif menu_option == 6: # Exit and save
+        elif menu_option == 7: # Exit and save
             break
         
     qr_unreal_dict['keys'] = list(qr_unreal_dict.keys())
