@@ -1,4 +1,5 @@
 import qrcode, os, json
+from PIL import Image,ImageDraw, ImageFont
 
 def ask_load_dict():
     while True:
@@ -108,8 +109,18 @@ def main():
             if not qr_id in qr_unreal_dict:
                 print("Error. The id does not exist.")
             else:
-                qrcode.make(qr_id).save(qr_id + ".png")
-                print(f"QR saved as {qr_id}.png")
+                img = qrcode.make(qr_id)
+
+                # add text to the bottom of the image
+                draw = ImageDraw.Draw(img)
+                font = ImageFont.truetype("arial.ttf", 16)
+                draw.text((img.width*7, img.height-20), qr_id, font=font, fill="black", anchor="mm")
+
+                # save the image
+                img.save( qr_id + ".png")
+
+
+                
         elif menu_option == 6: # Exit and save
             break
         
