@@ -1,0 +1,242 @@
+{
+  "tableware": [
+    {
+      "mesh": "/Game/YCB/16K/029_plate/029_plate",
+      "x": 0,
+      "y": 0,
+      "z": 8,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/030_fork/030_fork",
+      "x": 20,
+      "y": 0,
+      "z": 10,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.14
+    },
+    {
+      "mesh": "/Game/YCB/16K/031_spoon/031_spoon",
+      "x": -18,
+      "y": 15,
+      "z": 10,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.14
+    },
+    {
+      "mesh": "/Game/YCB/16K/032_knife/032_knife",
+      "x": 35,
+      "y": -20,
+      "z": 10,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.14
+    },
+    {
+      "mesh": "/Game/YCB/16K/024_bowl/024_bowl",
+      "x": 25,
+      "y": 25,
+      "z": 8,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "fruits": [
+    {
+      "mesh": "/Game/YCB/16K/011_banana/011_banana",
+      "x": 0,
+      "y": 0,
+      "z": 8,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.10
+    },
+    {
+      "mesh": "/Game/YCB/16K/017_orange/017_orange",
+      "x": 10,
+      "y": -12,
+      "z": 10,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.10
+    }
+  ],
+  "entertainment": [
+    {
+      "mesh": "/Game/YCB/16K/077_rubiks_cube/077_rubiks_cube",
+      "x": 0,
+      "y": 0,
+      "z": 2,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/055_baseball/055_baseball",
+      "x": 5,
+      "y": 15,
+      "z": 4,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/073-b_lego_duplo/073-b_lego_duplo",
+      "x": 2,
+      "y": -5,
+      "z": 4,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "lego": [
+    {
+      "mesh": "/Game/YCB/16K/073-b_lego_duplo/073-b_lego_duplo",
+      "x": 2,
+      "y": -5,
+      "z": 4,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/073-b_lego_duplo/073-b_lego_duplo",
+      "x": 2,
+      "y": -5,
+      "z": 10,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "orange": [
+    {
+      "mesh": "/Game/YCB/16K/017_orange/017_orange",
+      "x": 0,
+      "y": 0,
+      "z": 6,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "banana": [
+    {
+      "mesh": "/Game/YCB/16K/011_banana/011_banana",
+      "x": 0,
+      "y": 0,
+      "z": 6,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "rubik": [
+    {
+      "mesh": "/Game/YCB/16K/077_rubiks_cube/077_rubiks_cube",
+      "x": 0,
+      "y": 0,
+      "z": 6,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "balls": [
+    {
+      "mesh": "/Game/YCB/16K/054_softball/054_softball",
+      "x": 20,
+      "y": -15,
+      "z": 10,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/055_baseball/055_baseball",
+      "x": 5,
+      "y": 15,
+      "z": 4,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/073-b_lego_duplo/073-b_lego_duplo",
+      "x": 2,
+      "y": -5,
+      "z": 4,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "cans": [
+    {
+      "mesh": "/Game/YCB/16K/002_master_chef_can/002_master_chef_can",
+      "x": 20,
+      "y": -15,
+      "z": 10,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/005_tomato_soup_can/005_tomato_soup_can",
+      "x": 5,
+      "y": 15,
+      "z": 4,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/007_tuna_fish_can/007_tuna_fish_can",
+      "x": 2,
+      "y": -5,
+      "z": 4,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/021_bleach_cleanser/021_bleach_cleanser",
+      "x": 20,
+      "y": -15,
+      "z": 4,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.1
+    }
+
+  ],
+  "keys": [ "tableware", "fruits", "entertainment", "lego", "orange", "banana", "rubik", "balls","cans"]
+}

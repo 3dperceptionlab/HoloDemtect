@@ -64,6 +64,7 @@ public:
 	FString task_type = "";
 	FString task_name = "";
 	FString total_time = "";
+	int total_items = 0;
 
 	UDatasetGenerator();
 	~UDatasetGenerator();
@@ -73,7 +74,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		bool sendSummaryRow();
 	UFUNCTION(BlueprintCallable)
-		void setSummaryVariables(FString task_type_p, FString task_name_p, FString total_time_p) { task_type = task_type_p; task_name = task_name_p; total_time = total_time_p;}
+		void setSummaryVariables(FString task_type_p, FString task_name_p, FString total_time_p, int total_items_p) { task_type = task_type_p; task_name = task_name_p; total_time = total_time_p; total_items = total_items_p; }
 
 	FString getTimeseriesString();
 	FString getRowSummaryString();

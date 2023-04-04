@@ -61,8 +61,7 @@ FString UDatasetGenerator::getRowSummaryString() {
 
 	//Get pawn and cast to MRPawn
 
-	FString output = FString::FromInt(id) + ";" + task_type + ";" + total_time + ";;;;;";
-
+	FString output = FString::FromInt(id) + ";" + task_type + ";" + total_time + ";;;;;" + FString::FromInt(total_items)+";";
 
 	return output;
 

@@ -64,6 +64,9 @@ void UQRItemDictionary::SpawnQRItems(const UObject* WorldContextObject, FString 
 
 	for (UQRItem* item : *items.Find(key))
 	{
-		spawned_objects.Add(AGraspingObject::SpawnGraspingObject(WorldContextObject, center, extent, rotation, item));
+		auto graspNewObject = AGraspingObject::SpawnGraspingObject(WorldContextObject, center, extent, rotation, item);
+		if(graspNewObject != nullptr)
+			spawned_objects.Add(graspNewObject);
 	}
+
 }
