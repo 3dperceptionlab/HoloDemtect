@@ -61,9 +61,9 @@ void UQRItemDictionary::SpawnQRItems(const UObject* WorldContextObject, FString 
 		UE_LOG(LogTemp, Error, TEXT("Key is not in QR items dict"));
 		return;
 	}
+	TArray<UQRItem*> qr_items = *(items.Find(key));
 
-	for (UQRItem* item : *items.Find(key))
-	{
+	for (UQRItem* item : qr_items){
 		auto graspNewObject = AGraspingObject::SpawnGraspingObject(WorldContextObject, center, extent, rotation, item);
 		if(graspNewObject != nullptr)
 			spawned_objects.Add(graspNewObject);

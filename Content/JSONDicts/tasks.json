@@ -5,32 +5,44 @@
     "type": "LayTableTask",
       "items": [
         { "id": "/Game/YCB/16K/017_orange/017_orange" },
-        { "id": "/Game/YCB/16K/011_banana/011_banana" }
+        { "id": "/Game/YCB/16K/011_banana/011_banana" },
+        { "id": "/Game/YCB/16K/029_plate/029_plate" },
+        { "id": "/Game/YCB/16K/030_fork/030_fork" },
+        { "id": "/Game/YCB/16K/031_spoon/031_spoon" },
+        { "id": "/Game/YCB/16K/032_knife/032_knife" },
+        { "id": "/Game/YCB/16K/024_bowl/024_bowl" }
+
+
       ]
     },
     {
     "task_id": "coupleObjects",
     "text": "Couple the objects",
     "type": "PairMatchingTask",
-    "items": [
-        {"id": "/Game/YCB/16K/017_orange/017_orange"},
-      { "id": "/Game/YCB/16K/011_banana/011_banana" },
-      { "id": "/Game/YCB/16K/024_bowl/024_bowl" },
-      { "id": "/Game/YCB/16K/054_softball/054_softball" }
+      "items": [
+        { "id": "/Game/YCB/16K/017_orange/017_orange" },
+        { "id": "/Game/YCB/16K/011_banana/011_banana" },
+        { "id": "/Game/YCB/16K/056_tennis_ball/056_tennis_ball" },
+        { "id": "/Game/YCB/16K/055_baseball/055_baseball" },
+        { "id": "/Game/YCB/16K/042_adjustable_wrench/042_adjustable_wrench" },
+        { "id": "/Game/YCB/16K/043_phillips_screwdriver/043_phillips_screwdriver" }
 
 
-    ]
+      ]
     },
     {
     "task_id": "shopping",
     "text": "Do the shopping",
     "type": "ShoppingTask",
-    "items": [
-       {"id": "/Game/YCB/16K/017_orange/017_orange"},
-      { "id": "/Game/YCB/16K/005_tomato_soup_can/005_tomato_soup_can" },
-      { "id": "/Game/YCB/16K/007_tuna_fish_can/007_tuna_fish_can" }
+      "items": [
+        { "id": "/Game/YCB/16K/017_orange/017_orange" },
+        { "id": "/Game/YCB/16K/005_tomato_soup_can/005_tomato_soup_can" },
+        { "id": "/Game/YCB/16K/007_tuna_fish_can/007_tuna_fish_can" },
+        { "id": "/Game/YCB/16K/009_gelatin_box/009_gelatin_box" },
+        { "id": "/Game/YCB/16K/011_banana/011_banana" }
 
-    ]
+
+      ]
     }
 
 ]}

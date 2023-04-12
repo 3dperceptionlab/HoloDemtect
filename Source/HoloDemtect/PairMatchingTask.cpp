@@ -45,6 +45,11 @@ TArray<AGraspingObject*> UPairMatchingTask::evaluate()
 	else
 		errors.Append(objs);
 
+	if (UTask::currentErrors < errors.Num()) {
+		UTask::totalErrors += errors.Num() - UTask::currentErrors;
+
+	}
+	UTask::currentErrors = errors.Num();
 
 	return errors;
 }
@@ -86,10 +91,10 @@ TArray<FString> UPairMatchingTask::GetTaskItems(TArray<AGraspingObject*> objs)
 	for (FString s : keys) {
 		auto* node = objs_classes.FindNode(s);
 		if (node == nullptr) {
-			FString itemString;
-			s.Split(TEXT("_"), nullptr, &itemString, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
-
-			items.Add(itemString);
+			FString itemString, itemString2;
+			s.Split(TEXT("/"), nullptr, &itemString, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
+			itemString.Split(TEXT("_"), nullptr, &itemString2, ESearchCase::IgnoreCase, ESearchDir::FromStart);
+			items.Add(itemString2);
 		}
 	}
 

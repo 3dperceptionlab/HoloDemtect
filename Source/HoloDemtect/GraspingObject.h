@@ -41,6 +41,10 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
 	static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, UQRItem *item);
 
+	UFUNCTION(BlueprintCallable, Category = "Data")
+		void SetMovable(bool movable_);
+
+
 	bool GrabObject_Implementation(USceneComponent*attach_to) override;
 	bool ReleaseObject_Implementation() override;
 };

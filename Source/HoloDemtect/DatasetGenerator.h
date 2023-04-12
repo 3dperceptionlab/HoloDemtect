@@ -47,7 +47,11 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Data")
 		int32 ObjectPut;
 	UPROPERTY(BlueprintReadWrite, Category = "Data")
+		int32 TotalErrors;
+	UPROPERTY(BlueprintReadWrite, Category = "Data")
 		FVector EyeTrackerPos;
+	UPROPERTY(BlueprintReadWrite, Category = "Data")
+		FVector EyeTrackerDir;
 
 };
 

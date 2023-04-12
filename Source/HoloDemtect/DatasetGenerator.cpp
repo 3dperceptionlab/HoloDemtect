@@ -37,20 +37,23 @@ FString AddData(FString Name, FString Value, FString BoundaryBegin) {
 
 FString UDatasetGenerator::getTimeseriesString() {
 
-	//FString output = "Time;RightHandObject;LeftHandObject;RightHandPos;RightHandRot;LeftHandPos;LeftHandRot;HeadPos;HeadRot;ObjectPut;EyeTrackerPos\n";
+	//FString output = "Time;RightHandObject;LeftHandObject;RightHandPos;RightHandRot;LeftHandPos;LeftHandRot;HeadPos;HeadRot;ObjectPut;TotalErrors;EyeTrackerPos;EyeTrackerDir\n";
 	FString output = "";
 	//recorrer el TArray de TimeseriesRow y crear un string con los valores de cada uno de los campos	
 	for (auto row : timeseries) {
-		FString RightHandObjectShort;
-		row.RightHandObject.Split(TEXT("_"), nullptr, &RightHandObjectShort, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
-		FString LeftHandObjectShort;
-		row.LeftHandObject.Split(TEXT("_"), nullptr, &LeftHandObjectShort, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
-	
-		FString rowData = row.time + ";" + RightHandObjectShort + ";" + LeftHandObjectShort +
+		FString RightHandObjectShort, RightHandObjectShort2;
+		row.RightHandObject.Split(TEXT("/"), nullptr, &RightHandObjectShort, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
+		RightHandObjectShort.Split(TEXT("_"), nullptr, &RightHandObjectShort2, ESearchCase::IgnoreCase, ESearchDir::FromStart);
+		FString LeftHandObjectShort, LeftHandObjectShort2;
+		row.LeftHandObject.Split(TEXT("/"), nullptr, &LeftHandObjectShort, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
+		LeftHandObjectShort.Split(TEXT("_"), nullptr, &LeftHandObjectShort2, ESearchCase::IgnoreCase, ESearchDir::FromStart);
+
+		FString rowData = row.time + ";" + RightHandObjectShort2 + ";" + LeftHandObjectShort2 +
 			";" + row.RightHandPos.ToString() + ";" + row.RightHandRot.ToString() + ";" +
 			row.LeftHandPos.ToString() + ";" + row.LeftHandRot.ToString() + ";" +
 			row.HeadPos.ToString() + ";" + row.HeadRot.ToString() + ";" +
-			FString::FromInt(row.ObjectPut) + ";" + row.EyeTrackerPos.ToString() + "\n";
+			FString::FromInt(row.ObjectPut) + ";" + FString::FromInt(row.TotalErrors) + ";"+
+			row.EyeTrackerPos.ToString() + ";" + row.EyeTrackerDir.ToString() + "\n";
 		output += rowData;
 	}
 

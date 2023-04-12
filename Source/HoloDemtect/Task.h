@@ -40,6 +40,8 @@ protected:
 
 	FTaskInfo taskInfo;
 
+
+
 public:
 	UTask();
 
@@ -48,6 +50,11 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Data")
 		AGraspingObject* evaluation_point;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Data")
+		int32 totalErrors = 0;
+
+	int32 currentErrors = 0;
 
 	UFUNCTION(BlueprintCallable)
 		virtual void initialize(AGraspingObject* evaluation_point_p, FTaskInfo taskInfo_);

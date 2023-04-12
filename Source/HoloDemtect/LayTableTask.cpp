@@ -21,6 +21,35 @@ void ULayTableTask::initialize(AGraspingObject* evaluation_point_, FTaskInfo tas
 
 TArray<AGraspingObject*> ULayTableTask::evaluate()
 {
+	TArray<AGraspingObject*> objs = UTask::evaluate();
+	TArray<AGraspingObject*> errors;
+
+	while (objs.Num() > 0){
+
+		//Loop through all table_elements list checking if the obj className equals any of the table_element values
+		auto head = table_elements.GetHead();
+		bool found = false;
+		while (head != nullptr) {
+			if (objs[0]->className.Equals(head->GetValue())) {
+				found = true;
+				break;
+			}
+			head = head->GetNextNode();
+		}
+
+		if (!found) {
+			errors.Add(objs[0]);
+		}
+
+		objs.RemoveAt(0);
+	}
+
+
+	if (UTask::currentErrors < errors.Num()) {
+		UTask::totalErrors += errors.Num() - UTask::currentErrors;
+	}
+	UTask::currentErrors = errors.Num();
+
 	return TArray<AGraspingObject*>();
 }
 
@@ -55,10 +84,10 @@ TArray<FString> ULayTableTask::GetTaskItems(TArray<AGraspingObject*> objs)
 	for (FString s : table_elements) {
 		auto* node = objs_classes.FindNode(s);
 		if (node == nullptr) {
-			FString itemString;
-			s.Split(TEXT("_"), nullptr, &itemString, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
-
-			items.Add(itemString);
+			FString itemString, itemString2;
+			s.Split(TEXT("/"), nullptr, &itemString, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
+			itemString.Split(TEXT("_"), nullptr, &itemString2, ESearchCase::IgnoreCase, ESearchDir::FromStart);
+			items.Add(itemString2);
 		}
 	}
 

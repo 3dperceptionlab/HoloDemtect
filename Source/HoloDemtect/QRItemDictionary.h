@@ -28,6 +28,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 		static UQRItemDictionary* CreateInstance(FString filename);
 
+	UFUNCTION(BlueprintCallable)
+	FString getItems() {
+		//USED FOR DEBUGGING
+		FString text = "Cans mesh:";
+		for(auto a : (*items.Find("cans"))){
+			text += a->meshName + ", ";
+		}
+		return(text); 
+	}
+	//get TArray item from key
+	
+
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
 		void SpawnQRItems(const UObject* WorldContextObject, FString key, FVector center, FRotator rotation, FVector extent);
 

@@ -38,6 +38,13 @@ TArray<AGraspingObject*> UShoppingTask::evaluate()
 		}
 		objs.RemoveAt(0);
 	}
+
+
+	if (UTask::currentErrors < errors.Num()) {
+		UTask::totalErrors += errors.Num() - UTask::currentErrors;
+	}
+	UTask::currentErrors = errors.Num();
+
 	return errors;
 }
 
@@ -48,18 +55,22 @@ bool UShoppingTask::IsTaskFinished()
 
 bool UShoppingTask::AreObjectsValid(TArray<AGraspingObject*> objs)
 {
-	TDoubleLinkedList<FString> objs_classes;
+	TArray<FString> objs_classes;
 	for (auto* obj : objs) {
-		objs_classes.AddTail(obj->className);
+		objs_classes.Add(obj->className);
 	}
+
+	// Print all elements of the list objs_classes
 
 	for (FString s : shopping_list){
 		UE_LOG(LogTemp, Warning, TEXT("Shopping list: %s"), *s);
-		auto* node = objs_classes.FindNode(s);
-		if (node == nullptr)
+		UE_LOG(LogTemp, Warning, TEXT("Objs_classes: %s"), *(FString::Join(objs_classes, TEXT(", "))));
+
+		int a = objs_classes.Find(s);
+		if (a == INDEX_NONE)
 			return false;
 
-		objs_classes.RemoveNode(node);
+		objs_classes.Remove(s);
 	}
 
 	SpawnedObjects = objs;
@@ -79,10 +90,10 @@ TArray<FString> UShoppingTask::GetTaskItems(TArray<AGraspingObject*> objs)
 	for (FString s : shopping_list){
 		auto* node = objs_classes.FindNode(s);
 		if (node == nullptr) {
-			FString itemString;
-			s.Split(TEXT("_"), nullptr, &itemString, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
-
-			items.Add(itemString);
+			FString itemString, itemString2;
+			s.Split(TEXT("/"), nullptr, &itemString, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
+			itemString.Split(TEXT("_"), nullptr, &itemString2, ESearchCase::IgnoreCase, ESearchDir::FromStart);
+			items.Add(itemString2);
 		}
 
 	}

@@ -18,9 +18,7 @@ AGraspingObject::AGraspingObject()
 	node = CreateDefaultSubobject<UStaticMeshComponent>(nameStr.c_str());
 	node->SetupAttachment(SceneRoot);
 	//SetRootComponent(SceneRoot);
-	//node->SetSimulatePhysics(true);
-	//node->SetLinearDamping(55);
-	//node->SetAngularDamping(55);
+
 	//node set mass to 5 kg
 	//node->SetMassOverrideInKg(NAME_None, 5, true);
 
@@ -61,12 +59,22 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 	grasping_object->node->SetStaticMesh(item->mesh);
 
 	// Global Location/Rotation (extracted from QR)
-	grasping_object->SetActorLocation(center + item->location);
-	grasping_object->SetActorRotation(rotation + item->rotation);
-
+	//grasping_object->SetActorLocation(center + item->location);
+	//grasping_object->SetActorRotation(rotation + item->rotation);
+	//grasping_object->SetLocaton
 	// Scale
 	//float scale = (extent.Y + extent.Z) / 50; // Calculated from QR
-	grasping_object->SetActorScale3D(FVector(item->scale, item->scale, item->scale)); // Different for each object
+	//grasping_object->SetActorScale3D(FVector(item->scale, item->scale, item->scale)); // Different for each object
+	grasping_object->node->SetWorldScale3D(FVector(item->scale, item->scale, item->scale));
+	grasping_object->node->SetSimulatePhysics(true);
+	grasping_object->node->SetEnableGravity(true);
+	grasping_object->node->SetLinearDamping(10);
+	grasping_object->node->SetAngularDamping(10);
+	grasping_object->node->SetMassOverrideInKg(NAME_None, 5, true);
+	
+
+	grasping_object->node->SetWorldLocationAndRotation(center + item->location,rotation + item->rotation);
+
 
 	// Not working code
 	// grasping_object->node->SetRelativeLocation(item->location);
@@ -82,6 +90,7 @@ bool AGraspingObject::GrabObject_Implementation(USceneComponent* attach_to)
 
 	grabbed = true;
 	//SetSimulatePhysics StaticMeshComponent
+	node->SetEnableGravity(false);
 	node->SetSimulatePhysics(false);
 	node->AttachToComponent(attach_to, FAttachmentTransformRules::KeepWorldTransform);
 	UE_LOG(LogTemp, Display, TEXT("Grabing object"));
@@ -98,7 +107,7 @@ bool AGraspingObject::ReleaseObject_Implementation()
 	grabbed = false;
 	node->SetEnableGravity(true);
 	//SetSimulatePhysics StaticMeshComponent
-	//node->SetSimulatePhysics(true);
+	node->SetSimulatePhysics(true);
 	node->DetachFromComponent( FDetachmentTransformRules::KeepWorldTransform);
 	DetachFromActor( FDetachmentTransformRules::KeepWorldTransform);
 	
@@ -107,5 +116,21 @@ bool AGraspingObject::ReleaseObject_Implementation()
 
 
 	return true;
+}
+
+void AGraspingObject::SetMovable(bool movable_){
+
+	movable = movable_;
+	node->SetEnableGravity(movable);
+	node->SetSimulatePhysics(movable);
+	if (movable) {
+		node->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	}
+	else {
+		node->SetCollisionProfileName(TEXT("OverlapAll"));
+		node->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	}
+	
 }
 

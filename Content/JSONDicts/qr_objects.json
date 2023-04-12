@@ -2,9 +2,9 @@
   "tableware": [
     {
       "mesh": "/Game/YCB/16K/029_plate/029_plate",
-      "x": 0,
-      "y": 0,
-      "z": 8,
+      "x": -10,
+      "y": -10,
+      "z": 5,
       "rx": 0,
       "ry": 0,
       "rz": 0,
@@ -14,29 +14,29 @@
       "mesh": "/Game/YCB/16K/030_fork/030_fork",
       "x": 20,
       "y": 0,
-      "z": 10,
+      "z": 5,
       "rx": 0,
-      "ry": 0,
+      "ry": 290,
       "rz": 0,
       "scale": 0.14
     },
     {
       "mesh": "/Game/YCB/16K/031_spoon/031_spoon",
       "x": -18,
-      "y": 15,
-      "z": 10,
+      "y": 25,
+      "z": 5,
       "rx": 0,
-      "ry": 0,
+      "ry": 55,
       "rz": 0,
       "scale": 0.14
     },
     {
       "mesh": "/Game/YCB/16K/032_knife/032_knife",
-      "x": 35,
-      "y": -20,
-      "z": 10,
+      "x": -5,
+      "y": -35,
+      "z": 5,
       "rx": 0,
-      "ry": 0,
+      "ry": 30,
       "rz": 0,
       "scale": 0.14
     },
@@ -44,7 +44,7 @@
       "mesh": "/Game/YCB/16K/024_bowl/024_bowl",
       "x": 25,
       "y": 25,
-      "z": 8,
+      "z": 5,
       "rx": 0,
       "ry": 0,
       "rz": 0,
@@ -54,9 +54,9 @@
   "fruits": [
     {
       "mesh": "/Game/YCB/16K/011_banana/011_banana",
-      "x": 0,
+      "x": -10,
       "y": 0,
-      "z": 8,
+      "z": 5,
       "rx": 0,
       "ry": 0,
       "rz": 0,
@@ -64,13 +64,23 @@
     },
     {
       "mesh": "/Game/YCB/16K/017_orange/017_orange",
-      "x": 10,
+      "x": 25,
       "y": -12,
-      "z": 10,
+      "z": 5,
       "rx": 0,
       "ry": 0,
       "rz": 0,
-      "scale": 0.10
+      "scale": 0.14
+    },
+    {
+      "mesh": "/Game/YCB/16K/018_plum/018_plum",
+      "x": 20,
+      "y": 30,
+      "z": 5,
+      "rx": 0,
+      "ry": 0,
+      "rz": 0,
+      "scale": 0.12
     }
   ],
   "entertainment": [
@@ -80,14 +90,14 @@
       "y": 0,
       "z": 2,
       "rx": 0,
-      "ry": 0,
+      "ry": 17,
       "rz": 0,
-      "scale": 0.1
+      "scale": 0.12
     },
     {
       "mesh": "/Game/YCB/16K/055_baseball/055_baseball",
-      "x": 5,
-      "y": 15,
+      "x": 15,
+      "y": 12,
       "z": 4,
       "rx": 0,
       "ry": 0,
@@ -96,13 +106,23 @@
     },
     {
       "mesh": "/Game/YCB/16K/073-b_lego_duplo/073-b_lego_duplo",
-      "x": 2,
-      "y": -5,
+      "x": 5,
+      "y": -15,
       "z": 4,
       "rx": 0,
       "ry": 0,
       "rz": 0,
-      "scale": 0.1
+      "scale": 0.14
+    },
+    {
+      "mesh": "/Game/YCB/16K/073-b_lego_duplo/073-b_lego_duplo",
+      "x": 5,
+      "y": -15,
+      "z": 8,
+      "rx": 0,
+      "ry": 40,
+      "rz": 0,
+      "scale": 0.14
     }
   ],
   "lego": [
@@ -120,11 +140,21 @@
       "mesh": "/Game/YCB/16K/073-b_lego_duplo/073-b_lego_duplo",
       "x": 2,
       "y": -5,
-      "z": 10,
+      "z": 8,
       "rx": 0,
-      "ry": 0,
+      "ry": 21,
       "rz": 0,
       "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/073-b_lego_duplo/073-b_lego_duplo",
+      "x": -5,
+      "y": 0,
+      "z": 3,
+      "rx": 0,
+      "ry": 21,
+      "rz": 0,
+      "scale": 0.15
     }
   ],
   "orange": [
@@ -132,11 +162,11 @@
       "mesh": "/Game/YCB/16K/017_orange/017_orange",
       "x": 0,
       "y": 0,
-      "z": 6,
+      "z": 4,
       "rx": 0,
       "ry": 0,
       "rz": 0,
-      "scale": 0.1
+      "scale": 0.13
     }
   ],
   "banana": [
@@ -160,15 +190,15 @@
       "rx": 0,
       "ry": 0,
       "rz": 0,
-      "scale": 0.1
+      "scale": 0.14
     }
   ],
   "balls": [
     {
-      "mesh": "/Game/YCB/16K/054_softball/054_softball",
+      "mesh": "/Game/YCB/16K/056_tennis_ball/056_tennis_ball",
       "x": 20,
       "y": -15,
-      "z": 10,
+      "z": 4,
       "rx": 0,
       "ry": 0,
       "rz": 0,
@@ -199,7 +229,7 @@
     {
       "mesh": "/Game/YCB/16K/002_master_chef_can/002_master_chef_can",
       "x": 20,
-      "y": -15,
+      "y": 10,
       "z": 10,
       "rx": 0,
       "ry": 0,
@@ -212,7 +242,7 @@
       "y": 15,
       "z": 4,
       "rx": 0,
-      "ry": 0,
+      "ry": -50,
       "rz": 0,
       "scale": 0.1
     },
@@ -222,7 +252,7 @@
       "y": -5,
       "z": 4,
       "rx": 0,
-      "ry": 0,
+      "ry": -55,
       "rz": 0,
       "scale": 0.1
     },
@@ -232,11 +262,79 @@
       "y": -15,
       "z": 4,
       "rx": 0,
-      "ry": 0,
+      "ry": 65,
       "rz": 0,
       "scale": 0.1
     }
 
   ],
-  "keys": [ "tableware", "fruits", "entertainment", "lego", "orange", "banana", "rubik", "balls","cans"]
+  "tools": [
+    {
+      "mesh": "/Game/YCB/16K/042_adjustable_wrench/042_adjustable_wrench",
+      "x": 20,
+      "y": -15,
+      "z": 10,
+      "rx": 0,
+      "ry": 68,
+      "rz": 0,
+      "scale": 0.1
+    },
+    {
+      "mesh": "/Game/YCB/16K/043_phillips_screwdriver/043_phillips_screwdriver",
+      "x": -5,
+      "y": 15,
+      "z": 4,
+      "rx": 0,
+      "ry": 11,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "square boxes": [
+    {
+      "mesh": "/Game/YCB/16K/009_gelatin_box/009_gelatin_box",
+      "x": 20,
+      "y": -15,
+      "z": 5,
+      "rx": 0,
+      "ry": 87,
+      "rz": 90,
+      "scale": 0.15
+    },
+    {
+      "mesh": "/Game/YCB/16K/003_cracker_box/003_cracker_box",
+      "x": 5,
+      "y": 11,
+      "z": 5,
+      "rx": 0,
+      "ry": 141,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "cracker": [
+    {
+      "mesh": "/Game/YCB/16K/003_cracker_box/003_cracker_box",
+      "x": 0,
+      "y": 0,
+      "z": 5,
+      "rx": 0,
+      "ry": 137,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "bottle": [
+    {
+      "mesh": "/Game/YCB/16K/021_bleach_cleanser/021_bleach_cleanser",
+      "x": 0,
+      "y": 0,
+      "z": 5,
+      "rx": 0,
+      "ry": 35,
+      "rz": 0,
+      "scale": 0.1
+    }
+  ],
+  "keys": [ "tableware", "fruits", "entertainment", "lego", "orange", "banana", "rubik", "balls", "cans", "tools", "square boxes", "cracker", "bottle" ]
 }
