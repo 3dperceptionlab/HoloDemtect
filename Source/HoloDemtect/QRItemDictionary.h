@@ -31,9 +31,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FString getItems() {
 		//USED FOR DEBUGGING
-		FString text = "Cans mesh:";
-		for(auto a : (*items.Find("cans"))){
-			text += a->meshName + ", ";
+		FString text = "Item names:";
+		for(auto& i : items){
+			for( auto a : i.Value)
+				text += a->meshName + ", ";
+			text += "\n";
 		}
 		return(text); 
 	}

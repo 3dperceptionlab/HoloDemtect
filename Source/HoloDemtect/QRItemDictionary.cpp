@@ -64,6 +64,7 @@ void UQRItemDictionary::SpawnQRItems(const UObject* WorldContextObject, FString 
 	TArray<UQRItem*> qr_items = *(items.Find(key));
 
 	for (UQRItem* item : qr_items){
+		UE_LOG(LogTemp, Warning, TEXT("QR Item: %s"), *item->meshName);
 		auto graspNewObject = AGraspingObject::SpawnGraspingObject(WorldContextObject, center, extent, rotation, item);
 		if(graspNewObject != nullptr)
 			spawned_objects.Add(graspNewObject);

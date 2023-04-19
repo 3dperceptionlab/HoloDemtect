@@ -50,11 +50,14 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 
 	UWorld* world = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	FActorSpawnParameters SpawnInfo = FActorSpawnParameters();
+	SpawnInfo.Name = FName(item->meshName);
 
 	if (world == nullptr)
 		return nullptr;
 
 	AGraspingObject* grasping_object = world->SpawnActor<AGraspingObject>(SpawnInfo);
+	UE_LOG(LogTemp, Warning, TEXT("Spawning: %s"), *item->meshName);
+
 	grasping_object->className = item->meshName;
 	grasping_object->node->SetStaticMesh(item->mesh);
 

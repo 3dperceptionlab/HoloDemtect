@@ -60,17 +60,30 @@ bool UShoppingTask::AreObjectsValid(TArray<AGraspingObject*> objs)
 		objs_classes.Add(obj->className);
 	}
 
+	TArray<FString> objs_names;
+	for (auto* obj : objs) {
+		objs_names.Add(obj->GetName());
+	}
+
+
+
 	// Print all elements of the list objs_classes
 
 	for (FString s : shopping_list){
 		UE_LOG(LogTemp, Warning, TEXT("Shopping list: %s"), *s);
 		UE_LOG(LogTemp, Warning, TEXT("Objs_classes: %s"), *(FString::Join(objs_classes, TEXT(", "))));
+		UE_LOG(LogTemp, Warning, TEXT("Objs_names: %s"), *(FString::Join(objs_names, TEXT(", "))));
 
 		int a = objs_classes.Find(s);
-		if (a == INDEX_NONE)
-			return false;
+		if (a == INDEX_NONE) {
+			int b = objs_names.Find(s);
+			if (b == INDEX_NONE) {
+				return false;
+			}
 
-		objs_classes.Remove(s);
+		}
+
+		//objs_classes.Remove(s);
 	}
 
 	SpawnedObjects = objs;
