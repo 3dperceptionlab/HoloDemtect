@@ -9,13 +9,15 @@
 /**
  * 
  */
-UCLASS(BlueprintType)
-class HOLODEMTECT_API UQRItem : public UObject
+USTRUCT(BlueprintType)
+struct FQRItem 
 {
 	GENERATED_BODY()
 
 public:
-	UQRItem();
+
+
+	FQRItem();
 
 	UStaticMesh* mesh;
 
@@ -26,7 +28,7 @@ public:
 	FRotator rotation;
 
 	float scale;
-	UFUNCTION(BlueprintCallable)
-		void SetParams(FString meshName_, FVector loc, FRotator rot, float scale_);
+
+	void SetParams(FString meshName_, FVector loc, FRotator rot, float scale_);
 
 };

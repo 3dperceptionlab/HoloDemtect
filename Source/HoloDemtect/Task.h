@@ -46,7 +46,7 @@ public:
 	UTask();
 
 	UPROPERTY(BlueprintReadOnly, Category = "Data")
-		UQRItem* eval_point_info;
+		FQRItem eval_point_info;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Data")
 		AGraspingObject* evaluation_point;

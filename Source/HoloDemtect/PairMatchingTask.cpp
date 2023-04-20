@@ -5,8 +5,8 @@
 
 UPairMatchingTask::UPairMatchingTask()
 {
-	eval_point_info = NewObject<UQRItem>();
-	eval_point_info->SetParams("/Game/EvalPointAssets/PairTable", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
+	eval_point_info = FQRItem();
+	eval_point_info.SetParams("/Game/EvalPointAssets/PairTable", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
 }
 
 void UPairMatchingTask::initialize(AGraspingObject* evaluation_point_, FTaskInfo taskInfo_)

@@ -4,11 +4,11 @@
 #include "QRItem.h"
 
 
-UQRItem::UQRItem()
+FQRItem::FQRItem()
 {
 }
 
-void UQRItem::SetParams(FString meshName_, FVector loc, FRotator rot, float scale_)
+void FQRItem::SetParams(FString meshName_, FVector loc, FRotator rot, float scale_)
 {
 	meshName = meshName_;
 	mesh = LoadObject<UStaticMesh>(nullptr, (const TCHAR*)*(meshName_), nullptr, LOAD_None, nullptr);

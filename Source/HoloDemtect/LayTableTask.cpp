@@ -5,8 +5,8 @@
 
 ULayTableTask::ULayTableTask()
 {
-	eval_point_info = NewObject<UQRItem>();
-	eval_point_info->SetParams("/Game/EvalPointAssets/SetupTable", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
+	eval_point_info = FQRItem();
+	eval_point_info.SetParams("/Game/EvalPointAssets/SetupTable", FVector(0, 0, 0), FRotator(0, 0, 0), 1);
 }
 
 void ULayTableTask::initialize(AGraspingObject* evaluation_point_, FTaskInfo taskInfo_)

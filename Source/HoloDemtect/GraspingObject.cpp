@@ -38,10 +38,10 @@ void AGraspingObject::Tick(float DeltaTime)
 
 }
 
-AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, UQRItem *item)
+AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, FQRItem item)
 {
 	//check item->location variables are not -nan
-	if (item->location.ContainsNaN()){
+	if (item.location.ContainsNaN()){
 
 		UE_LOG(LogTemp, Warning, TEXT("Location is NaN"));
 		return nullptr;
@@ -50,16 +50,16 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 
 	UWorld* world = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	FActorSpawnParameters SpawnInfo = FActorSpawnParameters();
-	SpawnInfo.Name = FName(item->meshName);
+	SpawnInfo.Name = FName(item.meshName);
 
 	if (world == nullptr)
 		return nullptr;
 
 	AGraspingObject* grasping_object = world->SpawnActor<AGraspingObject>(SpawnInfo);
-	UE_LOG(LogTemp, Warning, TEXT("Spawning: %s"), *item->meshName);
+	UE_LOG(LogTemp, Warning, TEXT("Spawning: %s"), *item.meshName);
 
-	grasping_object->className = item->meshName;
-	grasping_object->node->SetStaticMesh(item->mesh);
+	grasping_object->className = item.meshName;
+	grasping_object->node->SetStaticMesh(item.mesh);
 
 	// Global Location/Rotation (extracted from QR)
 	//grasping_object->SetActorLocation(center + item->location);
@@ -68,7 +68,7 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 	// Scale
 	//float scale = (extent.Y + extent.Z) / 50; // Calculated from QR
 	//grasping_object->SetActorScale3D(FVector(item->scale, item->scale, item->scale)); // Different for each object
-	grasping_object->node->SetWorldScale3D(FVector(item->scale, item->scale, item->scale));
+	grasping_object->node->SetWorldScale3D(FVector(item.scale, item.scale, item.scale));
 	grasping_object->node->SetSimulatePhysics(true);
 	grasping_object->node->SetEnableGravity(true);
 	grasping_object->node->SetLinearDamping(10);
@@ -76,7 +76,7 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 	grasping_object->node->SetMassOverrideInKg(NAME_None, 5, true);
 	
 
-	grasping_object->node->SetWorldLocationAndRotation(center + item->location,rotation + item->rotation);
+	grasping_object->node->SetWorldLocationAndRotation(center + item.location,rotation + item.rotation);
 
 
 	// Not working code

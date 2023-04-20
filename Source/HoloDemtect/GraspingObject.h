@@ -39,7 +39,7 @@ public:
 		UStaticMeshComponent* node;
 
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
-	static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, UQRItem *item);
+	static AGraspingObject* SpawnGraspingObject(const UObject* WorldContextObject, FVector center, FVector extent, FRotator rotation, FQRItem item);
 
 	UFUNCTION(BlueprintCallable, Category = "Data")
 		void SetMovable(bool movable_);

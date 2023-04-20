@@ -33,17 +33,20 @@ UQRItemDictionary* UQRItemDictionary::CreateInstance(FString filename)
 		for (FString key : keys)
 		{
 			// Extract UQRItems for each key
-			TArray<UQRItem*> qr_items;
+			TArray<FQRItem> qr_items;
+			
+
 			auto values = JsonValue->AsObject()->GetArrayField(key);
 			for (auto& value : values)
 			{
-				UQRItem* uqritem = NewObject<UQRItem>();
+				FQRItem uqritem = FQRItem();
 				FString meshName = value->AsObject()->GetStringField("mesh");
 				FVector loc(value->AsObject()->GetNumberField("x"), value->AsObject()->GetNumberField("y"), value->AsObject()->GetNumberField("z"));
 				FRotator rot(value->AsObject()->GetNumberField("rx"), value->AsObject()->GetNumberField("ry"), value->AsObject()->GetNumberField("rz"));
 				float scale = value->AsObject()->GetNumberField("scale");
-				uqritem->SetParams(meshName, loc, rot, scale);
+				uqritem.SetParams(meshName, loc, rot, scale);
 				qr_items.Add(uqritem);
+	
 			}
 			dict->items.Add(key, qr_items);
 		}
@@ -61,10 +64,10 @@ void UQRItemDictionary::SpawnQRItems(const UObject* WorldContextObject, FString 
 		UE_LOG(LogTemp, Error, TEXT("Key is not in QR items dict"));
 		return;
 	}
-	TArray<UQRItem*> qr_items = *(items.Find(key));
+	TArray<FQRItem> qr_items = *items.Find(key);
 
-	for (UQRItem* item : qr_items){
-		UE_LOG(LogTemp, Warning, TEXT("QR Item: %s"), *item->meshName);
+	for (FQRItem item : qr_items){
+		UE_LOG(LogTemp, Warning, TEXT("QR Item: %s"), *item.meshName);
 		auto graspNewObject = AGraspingObject::SpawnGraspingObject(WorldContextObject, center, extent, rotation, item);
 		if(graspNewObject != nullptr)
 			spawned_objects.Add(graspNewObject);

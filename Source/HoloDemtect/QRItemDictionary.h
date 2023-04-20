@@ -8,6 +8,7 @@
 #include "UObject/NoExportTypes.h"
 #include "QRItemDictionary.generated.h"
 
+
 /**
  * 
  */
@@ -16,12 +17,13 @@ class HOLODEMTECT_API UQRItemDictionary : public UObject
 {
 	GENERATED_BODY()
 
-	TMap<FString, TArray<UQRItem*>> items;
-
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	TArray<AGraspingObject*> spawned_objects;
+
+	TMap<FString, TArray<FQRItem>> items;
+
 
 	UQRItemDictionary();
 
@@ -33,8 +35,8 @@ public:
 		//USED FOR DEBUGGING
 		FString text = "Item names:";
 		for(auto& i : items){
-			for( auto a : i.Value)
-				text += a->meshName + ", ";
+			for( auto &a : i.Value)
+				text += a.meshName + ", ";
 			text += "\n";
 		}
 		return(text); 
