@@ -1,8 +1,9 @@
 # HoloDemtect
 ## A mixed reality framework for cognitive stimulation through interaction with objects
 
-[![GPLv3](https://img.shields.io/badge/license-GPLv3-blue)](https://img.shields.io/badge/license-GPLv3-blue)
-![GitHub repo size](https://img.shields.io/github/repo-size/ManuBenavent/HoloDemtect?style=flat-square)
+[![UnrealEngine](https://img.shields.io/badge/UnrealEngine-4.27-green?style=flat-square)](https://img.shields.io/badge/UnrealEngine-4.27-green?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/3dperceptionlab/HoloDemtect?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/3dperceptionlab/HoloDemtect?color=orange&style=flat-square)
 
 In this work, we propose a system for the evaluation of potential signs of dementia. To this end, we have defined three groups of tasks that stimulate mental and motor abilities of the users. The application is divided into two phases, in the first one the supervisor of the system sets up the environment by selecting the task and spawning the necessary objects with the help of QR codes. In the second one, the user performs the tasks while an evaluation is carried out by the supervisor and the system, by actively collecting data from the user's actions.
 
