@@ -50,7 +50,7 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 
 	UWorld* world = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	FActorSpawnParameters SpawnInfo = FActorSpawnParameters();
-	SpawnInfo.Name = FName(item.meshName);
+	//SpawnInfo.Name = FName(item.meshName);
 
 	if (world == nullptr)
 		return nullptr;
@@ -72,8 +72,8 @@ AGraspingObject* AGraspingObject::SpawnGraspingObject(const UObject* WorldContex
 	grasping_object->node->SetSimulatePhysics(true);
 	grasping_object->node->SetEnableGravity(true);
 	grasping_object->node->SetLinearDamping(10);
-	grasping_object->node->SetAngularDamping(10);
-	grasping_object->node->SetMassOverrideInKg(NAME_None, 5, true);
+	grasping_object->node->SetAngularDamping(20);
+	grasping_object->node->SetMassOverrideInKg(NAME_None, 1, true);
 	
 
 	grasping_object->node->SetWorldLocationAndRotation(center + item.location,rotation + item.rotation);
@@ -109,7 +109,9 @@ bool AGraspingObject::ReleaseObject_Implementation()
 
 	grabbed = false;
 	node->SetEnableGravity(true);
-	//SetSimulatePhysics StaticMeshComponent
+	//node->SetLinearDamping(20);
+	//node->SetAngularDamping(20);
+	//node->SetMassOverrideInKg(NAME_None, 8, true);
 	node->SetSimulatePhysics(true);
 	node->DetachFromComponent( FDetachmentTransformRules::KeepWorldTransform);
 	DetachFromActor( FDetachmentTransformRules::KeepWorldTransform);
@@ -130,8 +132,8 @@ void AGraspingObject::SetMovable(bool movable_){
 		node->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	}
 	else {
-		node->SetCollisionProfileName(TEXT("OverlapAll"));
-		node->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	//	node->SetCollisionProfileName(TEXT("OverlapAll"));
+	//	node->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	}
 	

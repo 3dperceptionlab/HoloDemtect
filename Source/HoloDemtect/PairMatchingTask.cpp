@@ -32,6 +32,11 @@ TArray<AGraspingObject*> UPairMatchingTask::evaluate()
 			pairings.FindAndRemoveChecked(pairings[objs[0]->className]);
 			pairings.FindAndRemoveChecked(objs[0]->className);
 
+			//Load USondBase
+			USoundBase* Sound = LoadObject<USoundBase>(NULL, TEXT("SoundCue'/Engine/EditorSounds/GamePreview/EndSimulate_Cue.EndSimulate_Cue'"), NULL, LOAD_None, NULL);
+			//Reproduce a sound here 
+			UGameplayStatics::PlaySound2D(World, Sound, 1, 1, 0);
+
 			objs[1]->Destroy();
 			SpawnedObjects.Remove(objs[1]);
 			objs.RemoveAt(1);

@@ -31,6 +31,12 @@ TArray<AGraspingObject*> UTask::evaluate()
 
 	for (AGraspingObject* obj : SpawnedObjects)
 	{
+		//if Z of the obj is lower than the evaluation point - 40 cm, move the obj to the obj + 40 cm
+		if (obj->node->GetComponentLocation().Z < evaluation_point->node->GetComponentLocation().Z - 14) {
+			obj->node->SetWorldLocation(FVector(obj->node->GetComponentLocation().X, obj->node->GetComponentLocation().Y, evaluation_point->node->GetComponentLocation().Z + 20));
+			obj->node->SetEnableGravity(false);
+		}
+
 		if (bbox.IsInside(obj->node->GetComponentLocation()) && !obj->grabbed)
 		{
 			objs.Add(obj);

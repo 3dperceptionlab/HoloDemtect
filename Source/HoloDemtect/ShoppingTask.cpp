@@ -30,6 +30,15 @@ TArray<AGraspingObject*> UShoppingTask::evaluate()
 
 		if (objs[0]->className.Equals(head->GetValue()))
 		{
+			//Get worldContextObject
+			UWorld* World = GEngine->GetWorldFromContextObject(evaluation_point, EGetWorldErrorMode::LogAndReturnNull);
+
+			//Load USondBase
+			USoundBase* Sound = LoadObject<USoundBase>(NULL, TEXT("SoundCue'/Engine/EditorSounds/GamePreview/EndSimulate_Cue.EndSimulate_Cue'"), NULL, LOAD_None, NULL);
+			//Reproduce a sound here 
+			UGameplayStatics::PlaySound2D(World, Sound, 1, 1, 0);
+
+
 			objs[0]->Destroy();
 			shopping_list.RemoveNode(head);
 			SpawnedObjects.Remove(objs[0]);

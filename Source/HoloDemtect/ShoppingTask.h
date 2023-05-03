@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Task.h"
+#include "Kismet/GameplayStatics.h"
 #include "ShoppingTask.generated.h"
 
 /**
