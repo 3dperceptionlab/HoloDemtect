@@ -67,10 +67,7 @@ public:
 
 
 	int id=-1;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Data")
 	bool semaforo = true;
-
 	FString task_type = "";
 	FString task_name = "";
 	FString total_time = "";

@@ -60,6 +60,31 @@ FString UDatasetGenerator::getTimeseriesString() {
 	return output;
 }
 
+FString UDatasetGenerator::getTimeseriesRowString(int id_p){
+//FString output = "Time;RightHandObject;LeftHandObject;RightHandPos;RightHandRot;LeftHandPos;LeftHandRot;HeadPos;HeadRot;ObjectPut;TotalErrors;EyeTrackerPos;EyeTrackerDir\n";
+FString output = "";
+//recorrer el TArray de TimeseriesRow y crear un string con los valores de cada uno de los campos	
+if (timeseries.Num() > id_p) {
+	auto row = timeseries[id_p];
+	FString RightHandObjectShort, RightHandObjectShort2;
+	row.RightHandObject.Split(TEXT("/"), nullptr, &RightHandObjectShort, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
+	RightHandObjectShort.Split(TEXT("_"), nullptr, &RightHandObjectShort2, ESearchCase::IgnoreCase, ESearchDir::FromStart);
+	FString LeftHandObjectShort, LeftHandObjectShort2;
+	row.LeftHandObject.Split(TEXT("/"), nullptr, &LeftHandObjectShort, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
+	LeftHandObjectShort.Split(TEXT("_"), nullptr, &LeftHandObjectShort2, ESearchCase::IgnoreCase, ESearchDir::FromStart);
+
+	FString rowData = row.time + ";" + RightHandObjectShort2 + ";" + LeftHandObjectShort2 +
+		";" + row.RightHandPos.ToString() + ";" + row.RightHandRot.ToString() + ";" +
+		row.LeftHandPos.ToString() + ";" + row.LeftHandRot.ToString() + ";" +
+		row.HeadPos.ToString() + ";" + row.HeadRot.ToString() + ";" +
+		FString::FromInt(row.ObjectPut) + ";" + FString::FromInt(row.TotalErrors) + ";" +
+		row.EyeTrackerPos.ToString() + ";" + row.EyeTrackerDir.ToString() + "\n";
+	output += rowData;
+}
+
+return output;
+}
+
 FString UDatasetGenerator::getRowSummaryString() {
 
 	//Get pawn and cast to MRPawn
@@ -70,9 +95,21 @@ FString UDatasetGenerator::getRowSummaryString() {
 
 }
 
+void UDatasetGenerator::addImage(UTextureRenderTarget2D* TextureRenderTarget) {
+	FBufferArchive Buffer;
+	FImageUtils::ExportRenderTarget2DAsPNG(TextureRenderTarget, Buffer);
+	images.Add(Buffer);
+}
 
-bool UDatasetGenerator::sendTimeseries()
-{
+
+
+bool UDatasetGenerator::sendTimeseries(){
+
+	if (timeseries.Num() <= 0)
+		return false;
+
+
+	semaforo = false;
 
 	FHttpModule& HttpModule = FHttpModule::Get();
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = HttpModule.CreateRequest();
@@ -95,11 +132,12 @@ bool UDatasetGenerator::sendTimeseries()
 	// This is binary content of the request
 	TArray<uint8> CombinedContent;
 	TArray<uint8> FileRawData;
-	FBufferArchive Buffer;
 
 
-	CombinedContent.Append(FStringToUint8(AddData("id", "-1", BoundaryBegin)));
-	CombinedContent.Append(FStringToUint8(AddData("row", getTimeseriesString(), BoundaryBegin)));
+
+	CombinedContent.Append(FStringToUint8(AddData("id", FString::FromInt(id), BoundaryBegin)));
+	CombinedContent.Append(FStringToUint8(AddData("row", getTimeseriesRowString(0), BoundaryBegin)));
+	CombinedContent.Append(FStringToUint8(AddData("img", FBase64::Encode(images[0]), BoundaryBegin)));
 
 	// Finally, add a boundary at the end of the payload
 	CombinedContent.Append(FStringToUint8(BoundaryEnd));
@@ -208,7 +246,10 @@ void UDatasetGenerator::OnResponseTimeseriesReceived(FHttpRequestPtr pRequest, F
 			if (FCString::Atoi(*IdString) > -1){
 
 				id = FCString::Atoi(*IdString);
-				sendSummaryRow();
+				timeseries.RemoveAt(0);
+				images.RemoveAt(0);
+				semaforo = true;
+				//sendSummaryRow();
 		
 			}else {
 				//Error
