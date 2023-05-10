@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Task.h"
-#include "Kismet/GameplayStatics.h"
 #include "PairMatchingTask.generated.h"
 
 /**

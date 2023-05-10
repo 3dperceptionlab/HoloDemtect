@@ -1,5 +1,5 @@
-#include "TaskMenu.h"
 #include "Styling/SlateColor.h"
+#include "TaskMenu.h"
 
 void UTaskMenu::NativeConstruct()
 {
