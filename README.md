@@ -32,6 +32,18 @@ There are two ways to run the AR application:
 - **Deploy the application to the HoloLens headset**: To deploy to the device, build and upload the package (.appxbundle and select "Allow me to select framework packages" and upload the .appx file) to the Mixed Reality Portal.
 If this is your first time, you will need to generate a key. To do this in UE4, go to Edit>Project Settings>Platform>HoloLens, in Packaging/Signing Certificate: Generate New.
 
+## Posible building errors
+
+> #### Not found some asset while building
+>
+> - Check the files in `ProjectFolder > Saved > Cooked` 
+>
+
+> #### Failed to build "Saved\UATTempProj.proj":
+>
+> - Recompile (not just compile) AutomationTool Visual Studio project
+> 
+
 
 
 ## Authors
