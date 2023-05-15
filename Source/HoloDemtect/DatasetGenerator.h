@@ -9,6 +9,7 @@
 #include <chrono>
 #include "Kismet/GameplayStatics.h"
 #include "ImageUtils.h"
+
 #include "Serialization/BufferArchive.h"
 #include "DatasetGenerator.generated.h"
 
@@ -55,6 +56,8 @@ public:
 
 };
 
+class FThreadDataset;
+
 UCLASS(BlueprintType)
 class HOLODEMTECT_API UDatasetGenerator : public UObject
 {
@@ -63,7 +66,8 @@ class HOLODEMTECT_API UDatasetGenerator : public UObject
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Data")
 		TArray< FTimeseriesRow> timeseries;
-		TArray<FBufferArchive> images;
+		//TArray<FBufferArchive> images;
+		TArray<UTextureRenderTarget2D*> images;
 
 
 	int id=-1;
@@ -75,7 +79,8 @@ public:
 	FString task_name = "";
 	FString total_time = "";
 	int total_items = 0;
-
+	FThreadDataset* threadGen;
+	FRunnableThread * runnableThread;
 
 	UDatasetGenerator();
 	~UDatasetGenerator();
@@ -96,4 +101,47 @@ public:
 	void OnResponseTimeseriesReceived(FHttpRequestPtr pRequest, FHttpResponsePtr pResponse, bool connectedSuccessfully);
 	void OnResponseSummaryReceived(FHttpRequestPtr pRequest, FHttpResponsePtr pResponse, bool connectedSuccessfully);
 
+	UFUNCTION(BlueprintCallable)
+	void StartCapture();
+
+	UFUNCTION(BlueprintCallable)
+	void StopCapture();
+
+};
+
+
+class HOLODEMTECT_API FThreadDataset : public FRunnable
+{
+
+public:
+	FThreadDataset(UDatasetGenerator* InGenerator) : Generator(InGenerator) {}
+	~FThreadDataset() {};
+
+	virtual bool Init() override
+	{
+		// Initialize thread here
+		return true;
+	}
+	virtual uint32 Run() override {
+
+		while (!Stopping) {
+
+			if (Generator->semaforo && Generator->timeseries.Num() > 0) {
+				Generator->sendTimeseries();
+			}
+		}
+		return 0;
+	}
+
+	virtual void Stop() override {
+		Stopping = true;
+	}
+
+	virtual void Exit() override {
+
+	}
+
+private:
+	bool Stopping = false;
+	UDatasetGenerator* Generator;
 };
