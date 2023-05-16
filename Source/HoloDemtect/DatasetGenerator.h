@@ -66,8 +66,8 @@ class HOLODEMTECT_API UDatasetGenerator : public UObject
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Data")
 		TArray< FTimeseriesRow> timeseries;
-		//TArray<FBufferArchive> images;
-		TArray<UTextureRenderTarget2D*> images;
+		TArray<FBufferArchive> images;
+		//TArray<UTextureRenderTarget2D*> images;
 
 
 	int id=-1;

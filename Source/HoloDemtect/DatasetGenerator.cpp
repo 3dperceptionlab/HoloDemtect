@@ -90,21 +90,22 @@ FString UDatasetGenerator::getRowSummaryString() {
 
 	//Get pawn and cast to MRPawn
 
-	FString output = FString::FromInt(id) + ";" + task_type + ";" + total_time + ";None;"+ FString::FromInt(timeseries.Last().TotalErrors) + ";" + FString::FromInt(total_items) + ";visual_evaluation;eval_id";
+	//FString output = FString::FromInt(id) + ";" + task_type + ";" + total_time + ";None;"+ FString::FromInt(timeseries.Last().TotalErrors) + ";" + FString::FromInt(total_items) + ";visual_evaluation;eval_id";
+	FString output = FString::FromInt(id) + ";" + task_type + ";" + total_time + ";None;TotalErrors;" + FString::FromInt(total_items) + ";visual_evaluation;eval_id";
 
 	return output;
 
 }
 
-/*void UDatasetGenerator::addImage(UTextureRenderTarget2D* TextureRenderTarget) {
+void UDatasetGenerator::addImage(UTextureRenderTarget2D* TextureRenderTarget) {
 	FBufferArchive Buffer;
 	FImageUtils::ExportRenderTarget2DAsPNG(TextureRenderTarget, Buffer);
 	images.Add(Buffer);
-}*/
-void UDatasetGenerator::addImage(UTextureRenderTarget2D* TextureRenderTarget) {
+}
+/*void UDatasetGenerator::addImage(UTextureRenderTarget2D* TextureRenderTarget) {
 
 	images.Add(TextureRenderTarget);
-}
+}*/
 
 
 bool UDatasetGenerator::sendTimeseries(){
@@ -141,10 +142,14 @@ bool UDatasetGenerator::sendTimeseries(){
 
 	CombinedContent.Append(FStringToUint8(AddData("id", FString::FromInt(id), BoundaryBegin)));
 	CombinedContent.Append(FStringToUint8(AddData("row", getTimeseriesRowString(0), BoundaryBegin)));
-	FBufferArchive Buffer;
-	FImageUtils::ExportRenderTarget2DAsPNG(images[0], Buffer);
-	CombinedContent.Append(FStringToUint8(AddData("img", FBase64::Encode(Buffer), BoundaryBegin)));
-
+	if (images.Num() > 0) {
+		//FBufferArchive Buffer;
+		//FImageUtils::ExportRenderTarget2DAsPNG(images[0], Buffer);
+		CombinedContent.Append(FStringToUint8(AddData("img", FBase64::Encode(images[0]), BoundaryBegin)));
+	}
+	else {
+		UE_LOG(LogTemp, Display, TEXT("No images in array"));
+	}
 	// Finally, add a boundary at the end of the payload
 	CombinedContent.Append(FStringToUint8(BoundaryEnd));
 
