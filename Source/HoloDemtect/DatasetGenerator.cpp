@@ -254,11 +254,14 @@ void UDatasetGenerator::OnResponseTimeseriesReceived(FHttpRequestPtr pRequest, F
 		if (FJsonSerializer::Deserialize(Reader, JsonValue)) {
 			FString IdString = JsonValue->AsObject()->GetStringField("id");
 			
-			if (FCString::Atoi(*IdString) > -1){
+			if (FCString::Atoi(*IdString) > -1) {
 
 				id = FCString::Atoi(*IdString);
-				timeseries.RemoveAt(0);
-				images.RemoveAt(0);
+				if (timeseries.Num() > 0)
+					timeseries.RemoveAt(0);
+				if(images.Num() > 1)
+					images.RemoveAt(0);
+				
 				semaforo = true;
 				//sendSummaryRow();
 		
