@@ -2,7 +2,174 @@
 
 
 #include "DatasetGenerator.h"
+#include "ImageUtils.h"
+#include "RHI.h"
+#include "Engine/Texture2D.h"
+#include "Misc/ObjectThumbnail.h"
+#include "Engine/TextureRenderTarget2D.h"
+#include "CubemapUnwrapUtils.h"
+#include "Logging/MessageLog.h"
+#include "IImageWrapper.h"
+#include "IImageWrapperModule.h"
+#include "Misc/FileHelper.h"
+#include "DDSLoader.h"
+#include "HDRLoader.h"
+#include "Misc/Paths.h"
+#include "Modules/ModuleManager.h"
 
+FPixelFormatInfo	GPixelFormatsLocal[PF_MAX] =
+{
+	// Name						BlockSizeX	BlockSizeY	BlockSizeZ	BlockBytes	NumComponents	PlatformFormat	Supported		UnrealFormat
+
+	{ TEXT("unknown"),			0,			0,			0,			0,			0,				0,				0,				PF_Unknown			},
+	{ TEXT("A32B32G32R32F"),	1,			1,			1,			16,			4,				0,				1,				PF_A32B32G32R32F	},
+	{ TEXT("B8G8R8A8"),			1,			1,			1,			4,			4,				0,				1,				PF_B8G8R8A8			},
+	{ TEXT("G8"),				1,			1,			1,			1,			1,				0,				1,				PF_G8				},
+	{ TEXT("G16"),				1,			1,			1,			2,			1,				0,				1,				PF_G16				},
+	{ TEXT("DXT1"),				4,			4,			1,			8,			3,				0,				1,				PF_DXT1				},
+	{ TEXT("DXT3"),				4,			4,			1,			16,			4,				0,				1,				PF_DXT3				},
+	{ TEXT("DXT5"),				4,			4,			1,			16,			4,				0,				1,				PF_DXT5				},
+	{ TEXT("UYVY"),				2,			1,			1,			4,			4,				0,				0,				PF_UYVY				},
+	{ TEXT("FloatRGB"),			1,			1,			1,			4,			3,				0,				1,				PF_FloatRGB			},
+	{ TEXT("FloatRGBA"),		1,			1,			1,			8,			4,				0,				1,				PF_FloatRGBA		},
+	{ TEXT("DepthStencil"),		1,			1,			1,			4,			1,				0,				0,				PF_DepthStencil		},
+	{ TEXT("ShadowDepth"),		1,			1,			1,			4,			1,				0,				0,				PF_ShadowDepth		},
+	{ TEXT("R32_FLOAT"),		1,			1,			1,			4,			1,				0,				1,				PF_R32_FLOAT		},
+	{ TEXT("G16R16"),			1,			1,			1,			4,			2,				0,				1,				PF_G16R16			},
+	{ TEXT("G16R16F"),			1,			1,			1,			4,			2,				0,				1,				PF_G16R16F			},
+	{ TEXT("G16R16F_FILTER"),	1,			1,			1,			4,			2,				0,				1,				PF_G16R16F_FILTER	},
+	{ TEXT("G32R32F"),			1,			1,			1,			8,			2,				0,				1,				PF_G32R32F			},
+	{ TEXT("A2B10G10R10"),      1,          1,          1,          4,          4,              0,              1,				PF_A2B10G10R10		},
+	{ TEXT("A16B16G16R16"),		1,			1,			1,			8,			4,				0,				1,				PF_A16B16G16R16		},
+	{ TEXT("D24"),				1,			1,			1,			4,			1,				0,				1,				PF_D24				},
+	{ TEXT("PF_R16F"),			1,			1,			1,			2,			1,				0,				1,				PF_R16F				},
+	{ TEXT("PF_R16F_FILTER"),	1,			1,			1,			2,			1,				0,				1,				PF_R16F_FILTER		},
+	{ TEXT("BC5"),				4,			4,			1,			16,			2,				0,				1,				PF_BC5				},
+	{ TEXT("V8U8"),				1,			1,			1,			2,			2,				0,				1,				PF_V8U8				},
+	{ TEXT("A1"),				1,			1,			1,			1,			1,				0,				0,				PF_A1				},
+	{ TEXT("FloatR11G11B10"),	1,			1,			1,			4,			3,				0,				0,				PF_FloatR11G11B10	},
+	{ TEXT("A8"),				1,			1,			1,			1,			1,				0,				1,				PF_A8				},
+	{ TEXT("R32_UINT"),			1,			1,			1,			4,			1,				0,				1,				PF_R32_UINT			},
+	{ TEXT("R32_SINT"),			1,			1,			1,			4,			1,				0,				1,				PF_R32_SINT			},
+
+	// IOS Support
+	{ TEXT("PVRTC2"),			8,			4,			1,			8,			4,				0,				0,				PF_PVRTC2			},
+	{ TEXT("PVRTC4"),			4,			4,			1,			8,			4,				0,				0,				PF_PVRTC4			},
+
+	{ TEXT("R16_UINT"),			1,			1,			1,			2,			1,				0,				1,				PF_R16_UINT			},
+	{ TEXT("R16_SINT"),			1,			1,			1,			2,			1,				0,				1,				PF_R16_SINT			},
+	{ TEXT("R16G16B16A16_UINT"),1,			1,			1,			8,			4,				0,				1,				PF_R16G16B16A16_UINT},
+	{ TEXT("R16G16B16A16_SINT"),1,			1,			1,			8,			4,				0,				1,				PF_R16G16B16A16_SINT},
+	{ TEXT("R5G6B5_UNORM"),     1,          1,          1,          2,          3,              0,              1,              PF_R5G6B5_UNORM		},
+	{ TEXT("R8G8B8A8"),			1,			1,			1,			4,			4,				0,				1,				PF_R8G8B8A8			},
+	{ TEXT("A8R8G8B8"),			1,			1,			1,			4,			4,				0,				1,				PF_A8R8G8B8			},
+	{ TEXT("BC4"),				4,			4,			1,			8,			1,				0,				1,				PF_BC4				},
+	{ TEXT("R8G8"),				1,			1,			1,			2,			2,				0,				1,				PF_R8G8				},
+
+	{ TEXT("ATC_RGB"),			4,			4,			1,			8,			3,				0,				0,				PF_ATC_RGB			},
+	{ TEXT("ATC_RGBA_E"),		4,			4,			1,			16,			4,				0,				0,				PF_ATC_RGBA_E		},
+	{ TEXT("ATC_RGBA_I"),		4,			4,			1,			16,			4,				0,				0,				PF_ATC_RGBA_I		},
+	{ TEXT("X24_G8"),			1,			1,			1,			1,			1,				0,				0,				PF_X24_G8			},
+	{ TEXT("ETC1"),				4,			4,			1,			8,			3,				0,				0,				PF_ETC1				},
+	{ TEXT("ETC2_RGB"),			4,			4,			1,			8,			3,				0,				0,				PF_ETC2_RGB			},
+	{ TEXT("ETC2_RGBA"),		4,			4,			1,			16,			4,				0,				0,				PF_ETC2_RGBA		},
+	{ TEXT("PF_R32G32B32A32_UINT"),1,		1,			1,			16,			4,				0,				1,				PF_R32G32B32A32_UINT},
+	{ TEXT("PF_R16G16_UINT"),	1,			1,			1,			4,			4,				0,				1,				PF_R16G16_UINT},
+
+	// ASTC support
+	{ TEXT("ASTC_4x4"),			4,			4,			1,			16,			4,				0,				0,				PF_ASTC_4x4			},
+	{ TEXT("ASTC_6x6"),			6,			6,			1,			16,			4,				0,				0,				PF_ASTC_6x6			},
+	{ TEXT("ASTC_8x8"),			8,			8,			1,			16,			4,				0,				0,				PF_ASTC_8x8			},
+	{ TEXT("ASTC_10x10"),		10,			10,			1,			16,			4,				0,				0,				PF_ASTC_10x10		},
+	{ TEXT("ASTC_12x12"),		12,			12,			1,			16,			4,				0,				0,				PF_ASTC_12x12		},
+
+	{ TEXT("BC6H"),				4,			4,			1,			16,			3,				0,				1,				PF_BC6H				},
+	{ TEXT("BC7"),				4,			4,			1,			16,			4,				0,				1,				PF_BC7				},
+	{ TEXT("R8_UINT"),			1,			1,			1,			1,			1,				0,				1,				PF_R8_UINT			},
+	{ TEXT("L8"),				1,			1,			1,			1,			1,				0,				0,				PF_L8				},
+	{ TEXT("XGXR8"),			1,			1,			1,			4,			4,				0,				1,				PF_XGXR8 			},
+	{ TEXT("R8G8B8A8_UINT"),	1,			1,			1,			4,			4,				0,				1,				PF_R8G8B8A8_UINT	},
+	{ TEXT("R8G8B8A8_SNORM"),	1,			1,			1,			4,			4,				0,				1,				PF_R8G8B8A8_SNORM	},
+
+	{ TEXT("R16G16B16A16_UINT"),1,			1,			1,			8,			4,				0,				1,				PF_R16G16B16A16_UNORM },
+	{ TEXT("R16G16B16A16_SINT"),1,			1,			1,			8,			4,				0,				1,				PF_R16G16B16A16_SNORM },
+	{ TEXT("PLATFORM_HDR_0"),	0,			0,			0,			0,			0,				0,				0,				PF_PLATFORM_HDR_0   },
+	{ TEXT("PLATFORM_HDR_1"),	0,			0,			0,			0,			0,				0,				0,				PF_PLATFORM_HDR_1   },
+	{ TEXT("PLATFORM_HDR_2"),	0,			0,			0,			0,			0,				0,				0,				PF_PLATFORM_HDR_2   },
+
+	// NV12 contains 2 textures: R8 luminance plane followed by R8G8 1/4 size chrominance plane.
+	// BlockSize/BlockBytes/NumComponents values don't make much sense for this format, so set them all to one.
+	{ TEXT("NV12"),				1,			1,			1,			1,			1,				0,				0,				PF_NV12             },
+
+	{ TEXT("PF_R32G32_UINT"),   1,   		1,			1,			8,			2,				0,				1,				PF_R32G32_UINT      },
+
+	{ TEXT("PF_ETC2_R11_EAC"),  4,   		4,			1,			8,			1,				0,				0,				PF_ETC2_R11_EAC     },
+	{ TEXT("PF_ETC2_RG11_EAC"), 4,   		4,			1,			16,			2,				0,				0,				PF_ETC2_RG11_EAC    },
+	{ TEXT("R8"),				1,			1,			1,			1,			1,				0,				1,				PF_R8				},
+};
+
+
+SIZE_T CalculateImageBytesLocal(uint32 SizeX, uint32 SizeY, uint32 SizeZ, uint8 Format)
+{
+	if (Format == PF_A1)
+	{
+		// The number of bytes needed to store all 1 bit pixels in a line is the width of the image divided by the number of bits in a byte
+		uint32 BytesPerLine = SizeX / 8;
+		// The number of actual bytes in a 1 bit image is the bytes per line of pixels times the number of lines
+		return sizeof(uint8) * BytesPerLine * SizeY;
+	}
+	else if (SizeZ > 0)
+	{
+		return static_cast<SIZE_T>(SizeX / GPixelFormatsLocal[Format].BlockSizeX) * (SizeY / GPixelFormatsLocal[Format].BlockSizeY) * (SizeZ / GPixelFormatsLocal[Format].BlockSizeZ) * GPixelFormatsLocal[Format].BlockBytes;
+	}
+	else
+	{
+		return static_cast<SIZE_T>(SizeX / GPixelFormatsLocal[Format].BlockSizeX) * (SizeY / GPixelFormatsLocal[Format].BlockSizeY) * GPixelFormatsLocal[Format].BlockBytes;
+	}
+}
+
+static bool GetRawDataLocal(UTextureRenderTarget2D* TexRT, TArray64<uint8>& RawData)
+{
+	FRenderTarget* RenderTarget = TexRT->GameThread_GetRenderTargetResource();
+	EPixelFormat Format = TexRT->GetFormat();
+
+	int32 ImageBytes = CalculateImageBytesLocal(TexRT->SizeX, TexRT->SizeY, 0, Format);
+	RawData.AddUninitialized(ImageBytes);
+	bool bReadSuccess = false;
+	switch (Format){
+	case PF_FloatRGBA:
+	{
+		TArray<FFloat16Color> FloatColors;
+		bReadSuccess = RenderTarget->ReadFloat16Pixels(FloatColors);
+		FMemory::Memcpy(RawData.GetData(), FloatColors.GetData(), ImageBytes);
+	}
+	break;
+	case PF_B8G8R8A8:
+		bReadSuccess = RenderTarget->ReadPixelsPtr((FColor*)RawData.GetData());
+		break;
+	}
+	if (bReadSuccess == false)
+	{
+		RawData.Empty();
+	}
+	return bReadSuccess;
+}
+
+
+void FromRawDataToPNG(TArray64<uint8> RawData, FArchive& Ar) {
+
+	IImageWrapperModule& ImageWrapperModule = FModuleManager::Get().LoadModuleChecked<IImageWrapperModule>(TEXT("ImageWrapper"));
+
+	TSharedPtr<IImageWrapper> PNGImageWrapper = ImageWrapperModule.CreateImageWrapper(EImageFormat::PNG);
+
+	//PNGImageWrapper->SetRaw(RawData.GetData(), RawData.GetAllocatedSize(), Size.X, Size.Y, ERGBFormat::BGRA, 8);
+	PNGImageWrapper->SetRaw(RawData.GetData(), RawData.GetAllocatedSize(), 800, 1200, ERGBFormat::BGRA, 8);
+
+	const TArray64<uint8>& PNGData = PNGImageWrapper->GetCompressed(100);
+
+	Ar.Serialize((void*)PNGData.GetData(), PNGData.GetAllocatedSize());
+
+}
 
 UDatasetGenerator::UDatasetGenerator()
 {
@@ -99,7 +266,12 @@ FString UDatasetGenerator::getRowSummaryString() {
 
 void UDatasetGenerator::addImage(UTextureRenderTarget2D* TextureRenderTarget) {
 	FBufferArchive Buffer;
+	//Calculate time runing the function
+	auto start = std::chrono::steady_clock::now();
 	FImageUtils::ExportRenderTarget2DAsPNG(TextureRenderTarget, Buffer);
+	auto end = std::chrono::steady_clock::now();
+	float time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+	UE_LOG(LogTemp, Warning, TEXT("Time to export: %f"), time);
 	images.Add(Buffer);
 }
 /*void UDatasetGenerator::addImage(UTextureRenderTarget2D* TextureRenderTarget) {
@@ -107,6 +279,20 @@ void UDatasetGenerator::addImage(UTextureRenderTarget2D* TextureRenderTarget) {
 	images.Add(TextureRenderTarget);
 }*/
 
+
+bool UDatasetGenerator::addRawRenderTarget(UTextureRenderTarget2D* TextureRenderTarget) {
+	bool bSuccess = false;
+	if (TextureRenderTarget->GetFormat() == PF_B8G8R8A8) {
+		check(TextureRenderTarget != nullptr);
+		FRenderTarget* RenderTarget = TextureRenderTarget->GameThread_GetRenderTargetResource();
+		FIntPoint Size = RenderTarget->GetSizeXY();
+		UE_LOG(LogTemp, Warning, TEXT("Render Size: %f ; %f"), Size.X, Size.Y);
+		TArray64<uint8> RawData;
+		bSuccess = GetRawDataLocal(TextureRenderTarget, RawData);
+		rawImages.Add(RawData);
+	}
+	return bSuccess;
+}
 
 bool UDatasetGenerator::sendTimeseries(){
 
@@ -145,6 +331,10 @@ bool UDatasetGenerator::sendTimeseries(){
 	if (images.Num() > 0) {
 		//FBufferArchive Buffer;
 		//FImageUtils::ExportRenderTarget2DAsPNG(images[0], Buffer);
+
+		//FBufferArchive Buffer;
+		//FromRawDataToPNG(rawImages[0], Buffer);
+
 		CombinedContent.Append(FStringToUint8(AddData("img", FBase64::Encode(images[0]), BoundaryBegin)));
 	}
 	else {
@@ -176,6 +366,8 @@ bool UDatasetGenerator::sendTimeseries(){
 
 	return true;
 }
+
+
 
 
 bool UDatasetGenerator::sendSummaryRow()

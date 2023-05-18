@@ -67,6 +67,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Data")
 		TArray< FTimeseriesRow> timeseries;
 		TArray<FBufferArchive> images;
+		TArray < TArray64<uint8> > rawImages;
 		//TArray<UTextureRenderTarget2D*> images;
 
 
@@ -93,7 +94,8 @@ public:
 		void setSummaryVariables(FString task_type_p, FString task_name_p, FString total_time_p, int total_items_p) { task_type = task_type_p; task_name = task_name_p; total_time = total_time_p; total_items = total_items_p; }
 	UFUNCTION(BlueprintCallable)
 		void addImage(UTextureRenderTarget2D* TextureRenderTarget);
-
+	UFUNCTION(BlueprintCallable)
+		bool addRawRenderTarget(UTextureRenderTarget2D* TextureRenderTarget);
 
 	FString getTimeseriesString();
 	FString getTimeseriesRowString(int id);
