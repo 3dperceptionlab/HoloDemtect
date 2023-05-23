@@ -128,8 +128,8 @@ SIZE_T CalculateImageBytesLocal(uint32 SizeX, uint32 SizeY, uint32 SizeZ, uint8 
 	}
 }
 
-static bool GetRawDataLocal(UTextureRenderTarget2D* TexRT, TArray64<uint8>& RawData)
-{
+static bool GetRawDataLocal(UTextureRenderTarget2D* TexRT, TArray64<uint8>& RawData){
+
 	FRenderTarget* RenderTarget = TexRT->GameThread_GetRenderTargetResource();
 	EPixelFormat Format = TexRT->GetFormat();
 
@@ -163,7 +163,7 @@ void FromRawDataToPNG(TArray64<uint8> RawData, FArchive& Ar) {
 	TSharedPtr<IImageWrapper> PNGImageWrapper = ImageWrapperModule.CreateImageWrapper(EImageFormat::PNG);
 
 	//PNGImageWrapper->SetRaw(RawData.GetData(), RawData.GetAllocatedSize(), Size.X, Size.Y, ERGBFormat::BGRA, 8);
-	PNGImageWrapper->SetRaw(RawData.GetData(), RawData.GetAllocatedSize(), 800, 1200, ERGBFormat::BGRA, 8);
+	PNGImageWrapper->SetRaw(RawData.GetData(), RawData.GetAllocatedSize(), 1504, 846, ERGBFormat::BGRA, 8);
 
 	const TArray64<uint8>& PNGData = PNGImageWrapper->GetCompressed(100);
 
@@ -265,14 +265,14 @@ FString UDatasetGenerator::getRowSummaryString() {
 }
 
 void UDatasetGenerator::addImage(UTextureRenderTarget2D* TextureRenderTarget) {
-	FBufferArchive Buffer;
+	/*FBufferArchive Buffer;
 	//Calculate time runing the function
 	auto start = std::chrono::steady_clock::now();
 	FImageUtils::ExportRenderTarget2DAsPNG(TextureRenderTarget, Buffer);
 	auto end = std::chrono::steady_clock::now();
 	float time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 	UE_LOG(LogTemp, Warning, TEXT("Time to export: %f"), time);
-	images.Add(Buffer);
+	images.Add(Buffer);*/
 }
 /*void UDatasetGenerator::addImage(UTextureRenderTarget2D* TextureRenderTarget) {
 
@@ -286,7 +286,7 @@ bool UDatasetGenerator::addRawRenderTarget(UTextureRenderTarget2D* TextureRender
 		check(TextureRenderTarget != nullptr);
 		FRenderTarget* RenderTarget = TextureRenderTarget->GameThread_GetRenderTargetResource();
 		FIntPoint Size = RenderTarget->GetSizeXY();
-		UE_LOG(LogTemp, Warning, TEXT("Render Size: %f ; %f"), Size.X, Size.Y);
+		//UE_LOG(LogTemp, Warning, TEXT("Render Size: %i ; %i"), Size.X, Size.Y);
 		TArray64<uint8> RawData;
 		bSuccess = GetRawDataLocal(TextureRenderTarget, RawData);
 		rawImages.Add(RawData);
@@ -328,14 +328,14 @@ bool UDatasetGenerator::sendTimeseries(){
 
 	CombinedContent.Append(FStringToUint8(AddData("id", FString::FromInt(id), BoundaryBegin)));
 	CombinedContent.Append(FStringToUint8(AddData("row", getTimeseriesRowString(0), BoundaryBegin)));
-	if (images.Num() > 0) {
+	if (rawImages.Num() > 0) {
 		//FBufferArchive Buffer;
 		//FImageUtils::ExportRenderTarget2DAsPNG(images[0], Buffer);
 
-		//FBufferArchive Buffer;
-		//FromRawDataToPNG(rawImages[0], Buffer);
+		FBufferArchive Buffer;
+		FromRawDataToPNG(rawImages[0], Buffer);
 
-		CombinedContent.Append(FStringToUint8(AddData("img", FBase64::Encode(images[0]), BoundaryBegin)));
+		CombinedContent.Append(FStringToUint8(AddData("img", FBase64::Encode(Buffer), BoundaryBegin)));
 	}
 	else {
 		UE_LOG(LogTemp, Display, TEXT("No images in array"));
@@ -453,6 +453,8 @@ void UDatasetGenerator::OnResponseTimeseriesReceived(FHttpRequestPtr pRequest, F
 					timeseries.RemoveAt(0);
 				if(images.Num() > 1)
 					images.RemoveAt(0);
+				if (rawImages.Num() > 1)
+					rawImages.RemoveAt(0);
 				
 				semaforo = true;
 				//sendSummaryRow();
