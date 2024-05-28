@@ -1,5 +1,8 @@
 from flask import Flask, request, jsonify
 import os
+from PIL import Image, UnidentifiedImageError
+from io import BytesIO
+import base64
 
 id_counter = 0
 
@@ -25,16 +28,31 @@ def home():
 @app.route('/time_series', methods=["POST"])
 def time_series():
     global id_counter
-    if request.form.keys() != {'id', 'row'}:
+    #Check if request.form.keys() dont include 'id', 'row'
+    if not 'id' in request.form.keys() or not 'row' in request.form.keys():
         return jsonify({'msg':'invalid form-data'}), 400
     
     id = int(request.form['id'])
     if id == -1:
         id = id_counter
         id_counter += 1
-        write_to_file(f'time_series/{id}', 'Time;RightHandObject;LeftHandObject;RightHandPos;RightHandRot;LeftHandPos;LeftHandRot;HeadPos;HeadRot;ObjectPut;EyeTrackerPos')
+        write_to_file(f'time_series_low_performance/{id}', 'Time;RightHandObject;LeftHandObject;RightHandPos;RightHandRot;LeftHandPos;LeftHandRot;HeadPos;HeadRot;ObjectPut;TotalErrors;EyeTrackerPos;EyeTrackerDir')
 
-    write_to_file(f'time_series/{id}', request.form['row'])
+    write_to_file(f'time_series_low_performance/{id}', request.form['row'])
+
+    if 'img' in request.form.keys():
+        print('image length:', len(request.form['img']))
+        try:
+            im = Image.open(BytesIO(base64.b64decode(request.form['img']))).convert(mode='RGB')
+            # to get the date: first get the request.form['row'] and split it by ';' then get the first element and change every ':' to '-'
+            date = request.form['row'].split(';')[0].replace(':', '-')
+            # check if the the path exists, if not create it
+            if not os.path.exists(f'data/images/{id}'):
+                os.makedirs(f'data/images/{id}')
+            im.save(f'data/images/{id}/{date}.png')
+        except UnidentifiedImageError:
+            print('Controlled ERROR: UnidentifiedImageError')
+     
 
     # return success message and id with code 200
     return jsonify({'msg':'success', 'id':id}), 200
@@ -65,10 +83,13 @@ def main():
     if not os.path.exists('data/time_series'):
         os.makedirs('data/time_series')
 
+    if not os.path.exists('data/images'):
+        os.makedirs('data/images')
+
     # if file does not exist create it
     if not os.path.exists('data/summary.csv'):
         with open('data/summary.csv', 'w') as f:
-            f.write('task_id;task_type;time_total;time_holding;num_errors;age;gender;visual_evaluation\n')
+            f.write('task_id;task_type;total_time;time_holding;num_errors;total_objects;visual_evaluation;eval_id\n')
     else:
         with open('data/summary.csv', 'r') as f:
             lines = f.readlines()

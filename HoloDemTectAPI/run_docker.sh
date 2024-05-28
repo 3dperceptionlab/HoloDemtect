@@ -10,4 +10,4 @@ docker run -d --rm -it \
         --net=host \
         --env="DISPLAY" \
         --name $containerName \
-        python:latest bash
+        python:dmulero bash
