@@ -46,6 +46,71 @@ If this is your first time, you will need to generate a key. To do this in UE4, 
 
 
 
+## Source Code Architecture
+
+### Core Classes
+
+#### Data Generation and API Connection
+
+**DatasetGenerator** (`DatasetGenerator.h/cpp`)
+- **Purpose**: Manages data collection and transmission to the Flask API server for evaluation analysis
+- **Key Features**:
+  - Collects time-series data during task execution including hand positions, rotations, head tracking, eye tracking, and grasping events
+  - Captures screenshots at each data point for visual analysis
+  - Sends data via HTTP POST requests to the API server (`http://clarke:5000`)
+  - Implements multipart/form-data encoding for sending combined text and image data
+- **Data Structure**: `FTimeseriesRow` contains:
+  - Timestamp, hand positions/rotations (left/right)
+  - Head position/rotation, eye tracker position/direction
+  - Object grasp status, error counts
+- **API Endpoints**:
+  - `/time_series`: Sends individual time-series rows with accompanying images
+  - `/summary`: Sends task summary with completion metrics
+- **Thread Safety**: Uses semaphore to control sequential data transmission
+
+**Task System** (`Task.h/cpp`)
+- **Purpose**: Abstract base class for all cognitive evaluation tasks
+- **Key Features**:
+  - Loads task configurations from JSON files (`Content/JSONDicts/tasks.json`)
+  - Evaluates object placement within designated evaluation zones using bounding boxes
+  - Tracks errors and validates task completion
+  - Dynamic class loading using Unreal's reflection system
+- **Task Types**:
+  - **ShoppingTask** (`ShoppingTask.h/cpp`): Sequential memory task requiring users to collect items from a shopping list
+  - **LayTableTask** (`LayTableTask.h/cpp`): Logical organization task for table setting according to social conventions
+  - **PairMatchingTask** (`PairMatchingTask.h/cpp`): Semantic matching task requiring users to pair related objects
+
+#### Object Management
+
+**GraspingObject** (`GraspingObject.h/cpp`)
+- **Purpose**: Represents interactive virtual objects that users can manipulate
+- **Key Features**:
+  - Implements grab and release mechanics with physics simulation
+  - Spawns objects based on QR code detection with appropriate scale, position, and rotation
+  - Configurable as movable or fixed objects
+  - Tracks grab state for data generation
+
+
+#### User Interface
+
+**TaskMenu** (`TaskMenu.h`)
+- **Purpose**: Widget for task selection interface
+- **Key Features**:
+  - Dynamically generates buttons from task definitions
+  - Broadcasts task selection events to game logic
+  - Integrates with Unreal's UMG system
+
+### API Connection Flow
+
+1. **Task Initialization**: System loads tasks and objects from JSON files
+2. **QR Detection**: QR codes spawn objects and evaluation points in the environment
+3. **Data Collection**: `DatasetGenerator` continuously records user interactions during task execution
+4. **Data Transmission**: Time-series data sent incrementally to Flask API server with images
+5. **Task Completion**: Summary statistics sent to API for permanent storage
+6. **Data Storage**: API server stores individual time-series CSV files per session and cumulative summary
+
+The Flask API (`HoloDemTectAPI/main.py`) provides REST endpoints for receiving evaluation data, organizing it into time-series files and summary statistics for later analysis.
+
 ## Authors
 
 This project has been carried out by:
